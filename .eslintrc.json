@@ -1,0 +1,20 @@
+{
+    "extends": ["react-app", "prettier", "plugin:prettier/recommended"],
+    "plugins": ["react", "jsx-a11y", "import", "prettier"],
+    "rules": {
+        "prettier/prettier": ["error", { "endOfLine": "auto" }],
+        "react/jsx-first-prop-new-line": [2, "multiline"],
+        "react/jsx-max-props-per-line": [
+            2,
+            { "maximum": 1, "when": "multiline" }
+        ],
+        "react/jsx-closing-bracket-location": [2, "tag-aligned"],
+        "array-element-newline": [
+            "error",
+            {
+                "ArrayExpression": "consistent",
+                "ArrayPattern": { "minItems": 3 }
+            }
+        ]
+    }
+}
