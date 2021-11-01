@@ -9,17 +9,17 @@ export const InputRow = () => (
     <Switch>
         <Route
             exact
-            path="/"
+            path="/projectify"
             render={() => (
                 <h1 className="blue-grey-text text-center">
                     Select a Table to display using the dropdown above
                 </h1>
             )}
         />
-        <Route exact path="/student" component={StudentRow} />
-        <Route exact path="/class" component={ClassRow} />
-        <Route exact path="/major" component={MajorRow} />
-        <Route exact path="/project" component={ProjectRow} />
-        <Route exact path="/department" component={DepartmentRow} />
+        <Route exact path="/projectify/student" component={StudentRow} />
+        <Route exact path="/projectify/class" component={ClassRow} />
+        <Route exact path="/projectify/major" component={MajorRow} />
+        <Route exact path="/projectify/project" component={ProjectRow} />
+        <Route exact path="/projectify/department" component={DepartmentRow} />
     </Switch>
 )

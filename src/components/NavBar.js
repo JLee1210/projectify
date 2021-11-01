@@ -36,7 +36,7 @@ export const NavBar = () => {
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/student"
+                                        to="/projectify/student"
                                         onClick={() => setTableType('student')}
                                     >
                                         Student
@@ -44,7 +44,7 @@ export const NavBar = () => {
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/class"
+                                        to="/projectify/class"
                                         onClick={() => setTableType('class')}
                                     >
                                         Class
@@ -52,7 +52,7 @@ export const NavBar = () => {
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/project"
+                                        to="/projectify/project"
                                         onClick={() => setTableType('project')}
                                     >
                                         Project
@@ -60,7 +60,7 @@ export const NavBar = () => {
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/major"
+                                        to="/projectify/major"
                                         onClick={() => setTableType('major')}
                                     >
                                         Major
@@ -68,7 +68,7 @@ export const NavBar = () => {
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/department"
+                                        to="/projectify/department"
                                         onClick={() =>
                                             setTableType('department')
                                         }
