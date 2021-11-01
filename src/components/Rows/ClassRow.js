@@ -1,5 +1,5 @@
 import { Button, Form, FormGroup, Input, Label, Col, Row } from 'reactstrap'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { TableContext } from '../../context/TableProvider'
 import axios from 'axios'
 
@@ -11,7 +11,12 @@ export const ClassRow = () => {
         size: undefined,
         instructor: undefined,
     })
-    const { data } = useContext(TableContext)
+    const { data, setTableType } = useContext(TableContext)
+
+    useEffect(() => {
+        setTableType('class')
+    }, [setTableType])
+
     const onClickClass = async (e) => {
         e.preventDefault()
         // TODO: call api POST request function here

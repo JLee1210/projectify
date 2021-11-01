@@ -1,4 +1,4 @@
-import { InputRow } from '../components/InputRow'
+import { InputRowRoutes } from '../components/InputRowRoutes'
 import { NavBar } from '../components/NavBar'
 import { DynamicTable } from '../components/DynamicTable'
 import { Fragment, useContext, useEffect } from 'react'
@@ -28,7 +28,7 @@ const test = [
 ]
 
 export const TablesPage = () => {
-    const { setTableType, data } = useContext(TableContext)
+    const { data } = useContext(TableContext)
     //TODO: fill this with data
     const studentFetch = useFetch('', {
         depends: [],
@@ -55,14 +55,6 @@ export const TablesPage = () => {
     }
 
     useEffect(() => {
-        setTableType(window.location.pathname.substring(1) || undefined)
-        console.log(
-            studentFetch.isLoading,
-            classFetch.isLoading,
-            projectFetch.isLoading,
-            departmentFetch.isLoading,
-            majorFetch.isLoading
-        )
         if (
             !studentFetch.isLoading &&
             !classFetch.isLoading &&
@@ -74,6 +66,7 @@ export const TablesPage = () => {
                 data[keyVal[0]].setTable(dataObject[keyVal[0]])
             )
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         studentFetch.isLoading,
         classFetch.isLoading,
@@ -86,7 +79,7 @@ export const TablesPage = () => {
         <Fragment>
             <NavBar />
             <div id="flex" className="d-flex flex-column">
-                <InputRow />
+                <InputRowRoutes />
                 <div className="bt blue-grey-text"> </div>
                 <DynamicTable
                     autoWidth

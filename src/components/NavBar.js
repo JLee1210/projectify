@@ -21,7 +21,7 @@ export const NavBar = () => {
     return (
         <div id="navbar">
             <MDBNavbar color="default-color" expand="md" dark>
-                <MDBNavbarBrand>
+                <MDBNavbarBrand href="/projectify">
                     <strong className="white-text">Projectify</strong>
                 </MDBNavbarBrand>
                 <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />

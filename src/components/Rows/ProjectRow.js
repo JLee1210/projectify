@@ -1,5 +1,5 @@
 import { Button, Form, FormGroup, Input, Label, Col, Row } from 'reactstrap'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { TableContext } from '../../context/TableProvider'
 import axios from 'axios'
 
@@ -9,7 +9,12 @@ export const ProjectRow = () => {
         points: undefined,
         'group-size': undefined,
     })
-    const { data } = useContext(TableContext)
+    const { data, setTableType } = useContext(TableContext)
+
+    useEffect(() => {
+        setTableType('project')
+    }, [setTableType])
+
     const onClickProject = async (e) => {
         e.preventDefault()
         // TODO: call api POST request function here
