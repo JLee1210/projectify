@@ -15,7 +15,7 @@ export const DynamicTable = (props) => {
         })),
     }
 
-    if (tableType === undefined) {
+    if (tableType === 'projectify' || tableType === undefined) {
         return <div></div>
     }
 
