@@ -1,4 +1,5 @@
 {
+    "homepage": "http://JLee1210.github.io/projectify",
     "name": "projectify",
     "version": "0.1.0",
     "private": true,
@@ -27,7 +28,9 @@
         "css": "tachyons src/css/app.css > src/index.css --minify",
         "prestart": "npm run css",
         "prebuild": "npm run css",
-        "lint": "eslint --fix --ext .js,.jsx ."
+        "lint": "eslint --fix --ext .js,.jsx .",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
         "extends": [
@@ -50,6 +53,7 @@
     "devDependencies": {
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^4.0.0",
+        "gh-pages": "^3.2.3",
         "prettier": "2.4.1"
     }
 }
