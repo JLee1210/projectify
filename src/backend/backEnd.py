@@ -34,7 +34,17 @@ def edit(conn, args, table):
 def viewStudent(conn):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM STUDENT")
-    return cursor.fetchall()
+    data = cursor.fetchall()
+    jsonArray = []
+    for studentId, name, age, major, email in data:
+        jsonData = {}
+        jsonData['studentId'] = studentId
+        jsonData['name'] = name
+        jsonData['age'] = age
+        jsonData['major'] = major
+        jsonData['email'] = email
+        jsonArray.append(jsonData)
+    return jsonArray
 
 
 # Reports
@@ -63,14 +73,6 @@ def main():
     print("Table created successfully")
 
     # Driver Code:
-
-    # Debug
-
-    # Test Add
-    addArgs = [int(rand.random()*10000000),
-               'John Smith', 20, 'Computer Science', 'jsmith@purdue.edu']
-    addTable = 'STUDENT'
-    add(conn, addArgs, addTable)
 
     conn.commit()
 

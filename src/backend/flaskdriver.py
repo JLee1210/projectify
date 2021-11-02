@@ -1,3 +1,4 @@
+import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from backEnd import add, viewStudent
@@ -11,41 +12,25 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route("/<table>", methods=["GET", "POST"])
 @cross_origin()
 def tables(table):
-
+    conn = sqlite3.connect('test.db')
     if table == 'student':
         if request.method == "POST":
-            conn = sqlite3.connect('test.db')
             args = request.get_json()
             print(args)
-            add(conn, args, table)
-            return "SUCCESS"
+            newData = [value for key, value in args.items()]
+            add(conn, newData, table)
+            conn.commit()
+            returnJsonData = jsonify({'data': viewStudent(conn),
+                                      'status': 'SUCCESS'})
+            conn.close()
+            return returnJsonData
 
     if request.method == "GET":
+        conn.commit()
+        returnJsonData = jsonify({'data': viewStudent(conn),
+                                  'status': 'SUCCESS'})
+        conn.close()
+        return returnJsonData
 
-        return jsonify({
-            'data': [
-                {
-                    'studentId': 123,
-                    'name': 'Bob Mars',
-                    'age': 21,
-                    'major': 'Computer Science',
-                    'email': 'bmars1@purdue.edu',
-                },
-                {
-                    'studentId': 124,
-                    'name': 'Bob Mars',
-                    'age': 20,
-                    'major': 'Computer Science',
-                    'email': 'bmars2@purdue.edu',
-                },
-                {
-                    'studentId': 321,
-                    'name': 'James Bond',
-                    'age': 44,
-                    'major': 'Math',
-                    'email': 'jbond@purdue.edu',
-                },
-            ]
-        })
-
-    return "FAIL"
+    return jsonify({'data': NULL,
+                    'status': 'FAIL'})
