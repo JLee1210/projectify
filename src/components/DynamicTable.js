@@ -20,7 +20,7 @@ export const DynamicTable = (props) => {
     }
 
     return (
-        <div id="table" className="mt-5 mr-auto ml-auto">
+        <div id="table" className="mt-5">
             <MDBDataTableV5 {...props} data={studentData} />
         </div>
     )

@@ -1,10 +1,21 @@
-import { Button, Form, FormGroup, Input, Label, Col, Row } from 'reactstrap'
+import {
+    Button,
+    Form,
+    FormGroup,
+    FormText,
+    Input,
+    Label,
+    Col,
+    Row,
+} from 'reactstrap'
 import { useContext, useState, useEffect } from 'react'
 import { TableContext } from '../../context/TableProvider'
 import axios from 'axios'
+import { studentUrl } from '../../constants/endpoints'
 
 export const StudentRow = () => {
     const [formData, setFormData] = useState({
+        studentId: undefined,
         name: undefined,
         age: undefined,
         major: undefined,
@@ -21,8 +32,10 @@ export const StudentRow = () => {
         // TODO: call api POST request function here
         // const tableWithAddedData = [...data.student.table, formData]
         // data.student.setTable(tableWithAddedData)
-        const response = await axios.post('', formData)
-        data.student.setTable(response.data)
+        console.log(formData)
+        const response = await axios.post(studentUrl, formData)
+        console.log(response)
+        data.student.setTable(response.data.data)
     }
 
     return (
@@ -32,6 +45,29 @@ export const StudentRow = () => {
         >
             <Form>
                 <Row form>
+                    <Col sm={20}>
+                        <FormGroup>
+                            <Label for="studentId" sm={10}>
+                                Student ID
+                            </Label>
+                            <Input
+                                id="studentId"
+                                name="studentId"
+                                type="number"
+                                size={1}
+                                required
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }
+                            />
+                            <FormText>
+                                Student ID is required to enable button.
+                            </FormText>
+                        </FormGroup>
+                    </Col>
                     <Col sm={20}>
                         <FormGroup>
                             <Label for="name" sm={2}>
@@ -111,6 +147,7 @@ export const StudentRow = () => {
                     <Button
                         color="blue-grey"
                         className="h-25 m-auto"
+                        disabled={!formData.studentId}
                         onClick={onClickStudent}
                     >
                         Add

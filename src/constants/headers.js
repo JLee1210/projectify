@@ -1,5 +1,11 @@
 export const studentHeader = [
     {
+        label: 'Student ID',
+        field: 'studentId',
+        sort: 'asc',
+        width: 100,
+    },
+    {
         label: 'Name',
         field: 'name',
         sort: 'asc',
