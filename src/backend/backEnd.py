@@ -57,7 +57,7 @@ def view_table(conn, table):
     data = cursor.fetchall()
     jsonArray = []
     if table == "student":
-        for student_id, name, grad_class, gpa, project_id in data:
+        for student_id, project_id, name, gpa, grad_class in data:
             jsonData = {}
             jsonData['studentId'] = student_id
             jsonData['projectId'] = project_id
@@ -66,7 +66,7 @@ def view_table(conn, table):
             jsonData['name'] = name
             jsonArray.append(jsonData)
     elif table == "course":
-        for course_id, department_id, name, instructor in data:
+        for course_id, name, instructor, department_id in data:
             jsonData = {}
             jsonData['courseId'] = course_id
             jsonData['name'] = name
