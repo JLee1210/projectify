@@ -5,7 +5,13 @@ import { Fragment, useContext, useEffect } from 'react'
 import { TableContext } from '../context/TableProvider'
 import { MDBIcon } from 'mdbreact'
 import useFetch from 'react-fetch-hook'
-import { studentUrl } from '../constants/endpoints'
+import {
+    classUrl,
+    departmentUrl,
+    majorUrl,
+    projectUrl,
+    studentUrl,
+} from '../constants/endpoints'
 
 // const test = [
 //     {
@@ -32,18 +38,10 @@ export const TablesPage = () => {
     const { data } = useContext(TableContext)
     //TODO: fill this with data
     const studentFetch = useFetch(studentUrl)
-    const classFetch = useFetch('', {
-        depends: [],
-    })
-    const projectFetch = useFetch('', {
-        depends: [],
-    })
-    const departmentFetch = useFetch('', {
-        depends: [],
-    })
-    const majorFetch = useFetch('', {
-        depends: [],
-    })
+    const classFetch = useFetch(classUrl)
+    const projectFetch = useFetch(projectUrl)
+    const departmentFetch = useFetch(departmentUrl)
+    const majorFetch = useFetch(majorUrl)
 
     useEffect(() => {
         if (!studentFetch.isLoading) {
@@ -69,6 +67,7 @@ export const TablesPage = () => {
         departmentFetch.isLoading,
         majorFetch.isLoading,
     ])
+
     const isTableLoading =
         studentFetch.isLoading ||
         classFetch.isLoading ||

@@ -31,19 +31,48 @@ def edit(conn, args, table):
     conn.execute()
 
 
-def viewStudent(conn):
+def viewTable(conn, table):
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM STUDENT")
+    cursor.execute(f"SELECT * FROM {table}")
     data = cursor.fetchall()
     jsonArray = []
-    for studentId, name, age, major, email in data:
-        jsonData = {}
-        jsonData['studentId'] = studentId
-        jsonData['name'] = name
-        jsonData['age'] = age
-        jsonData['major'] = major
-        jsonData['email'] = email
-        jsonArray.append(jsonData)
+    if table == "student":
+        for student_id, name, age, major, email in data:
+            jsonData = {}
+            jsonData['studentId'] = student_id
+            jsonData['name'] = name
+            jsonData['age'] = age
+            jsonData['major'] = major
+            jsonData['email'] = email
+            jsonArray.append(jsonData)
+    elif table == "class":
+        for course_num, department, name, size, instructor in data:
+            jsonData = {}
+            jsonData['course-num'] = course_num
+            jsonData['name'] = name
+            jsonData['size'] = size
+            jsonData['department'] = department
+            jsonData['instructor'] = instructor
+            jsonArray.append(jsonData)
+    elif table == "project":
+        for name, points, group_size in data:
+            jsonData = {}
+            jsonData['points'] = points
+            jsonData['name'] = name
+            jsonData['group-size'] = group_size
+            jsonArray.append(jsonData)
+    elif table == "major":
+        for major_id, name in data:
+            jsonData = {}
+            jsonData['majorId'] = major_id
+            jsonData['name'] = name
+            jsonArray.append(jsonData)
+    elif table == "department":
+        for name, department_id in data:
+            jsonData = {}
+            jsonData['majorId'] = department_id
+            jsonData['name'] = name
+            jsonArray.append(jsonData)
     return jsonArray
 
 
@@ -65,22 +94,37 @@ def main():
     # Table creation
 #     conn.execute('''DROP TABLE IF EXISTS STUDENT;''') # ONLY UNCOMMENT WHEN CLEARING TABLE
     conn.execute('''CREATE TABLE IF NOT EXISTS STUDENT
-         (ID INT PRIMARY KEY     NOT NULL,
-         NAME           TEXT    NOT NULL,
-         AGE            INT     NOT NULL,
-         MAJOR        CHAR(50),
-     EMAIL      TEXT);''')
-    print("Table created successfully")
+                    (ID INT PRIMARY KEY     NOT NULL,
+                    NAME           TEXT    NOT NULL,
+                    AGE            INT     NOT NULL,
+                    MAJOR        CHAR(50),
+                    EMAIL      TEXT);
+                ''')
 
-    # Driver Code:
+    conn.execute('''CREATE TABLE IF NOT EXISTS CLASS
+                    (COURSENUM INT PRIMARY KEY     NOT NULL,
+                    DEPARTMENT     TEXT    NOT NULL,
+                    AGE            INT     NOT NULL,
+                    SIZE           INT     NOT NULL,
+                    INSTRUCTOR     TEXT    NOT NULL);
+                ''')
 
-    conn.commit()
+    conn.execute('''CREATE TABLE IF NOT EXISTS PROJECT
+                    (NAME TEXT PRIMARY KEY     NOT NULL,
+                    POINTS     INT    NOT NULL,
+                    SIZE       INT);
+                ''')
 
-    # Test Retrieve
-    print(viewStudent(conn))
+    conn.execute('''CREATE TABLE IF NOT EXISTS MAJOR
+                    (ID INT PRIMARY KEY    NOT NULL,
+                    NAME    TEXT           NOT NULL);
+                ''')
 
-    conn.close()
-
+    conn.execute('''CREATE TABLE IF NOT EXISTS MAJOR
+                    (ID INT PRIMARY KEY    NOT NULL,
+                    NAME    TEXT           NOT NULL);
+                ''')
+    print("Tables created successfully")
 
 if __name__ == '__main__':
     main()
