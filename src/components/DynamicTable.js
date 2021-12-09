@@ -7,7 +7,7 @@ import { TableContext } from '../context/TableProvider'
 export const DynamicTable = (props) => {
     const { tableType, data } = useContext(TableContext)
     const dataObj = data[tableType] || {}
-    const studentData = {
+    const tableData = {
         columns: tableHeaderChooser[tableType],
         rows: (dataObj['table'] || []).map((obj) => ({
             ...obj,
@@ -21,7 +21,7 @@ export const DynamicTable = (props) => {
 
     return (
         <div id="table" className="mt-5">
-            <MDBDataTableV5 {...props} data={studentData} />
+            <MDBDataTableV5 {...props} data={tableData} />
         </div>
     )
 }

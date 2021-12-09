@@ -10,6 +10,7 @@ export const TableProvider = ({ children }) => {
     const [majorRelationTable, setMajorRelationTable] = useState()
     const [projectTable, setProjectTable] = useState()
     const [studentTable, setStudentTable] = useState()
+    const [studentProjectsTable, setStudentProjectsTable] = useState()
 
     const value = {
         tableType,
@@ -27,6 +28,10 @@ export const TableProvider = ({ children }) => {
             },
             project: { table: projectTable, setTable: setProjectTable },
             student: { table: studentTable, setTable: setStudentTable },
+            studentProjects: {
+                table: studentProjectsTable,
+                setTable: setStudentProjectsTable,
+            },
         },
     }
 
