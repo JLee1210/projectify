@@ -17,7 +17,6 @@ import {
 } from '../constants/endpoints'
 import { TableContext } from '../context/TableProvider'
 import { HomePage } from '../pages/HomePage'
-import { Input } from 'reactstrap'
 
 // const test = [
 //     {

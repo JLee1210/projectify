@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import { StudentProjectsReport } from '../components/Reports/StudentProjectsReport'
 
+const FakeComponent = () => <div></div>
 //TODO: Update report2, report3, report4 once they are added on BE
 export const ReportRoutes = () => (
     <Switch>
@@ -13,17 +14,17 @@ export const ReportRoutes = () => (
         <Route
             exact
             path="/projectify/reports/report2"
-            component={<div></div>}
+            component={FakeComponent}
         />
         <Route
             exact
             path="/projectify/reports/report3"
-            component={<div></div>}
+            component={FakeComponent}
         />
         <Route
             exact
             path="/projectify/reports/report4"
-            component={<div></div>}
+            component={FakeComponent}
         />
         <Route
             render={() => (
