@@ -156,7 +156,7 @@ export const majorRelationHeader = [
     {
         label: 'Edit/Delete',
         field: 'button',
-        width: 200,
+        width: 50,
     },
 ]
 
