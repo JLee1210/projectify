@@ -1,13 +1,23 @@
-import { Button, Form, FormGroup, Input, Label, Col, Row } from 'reactstrap'
+import {
+    Button,
+    Form,
+    FormGroup,
+    FormText,
+    Input,
+    Label,
+    Col,
+    Row,
+} from 'reactstrap'
 import { useContext, useState, useEffect } from 'react'
 import { TableContext } from '../../context/TableProvider'
 import axios from 'axios'
+import { projectUrl } from '../../constants/endpoints'
 
 export const ProjectRow = () => {
     const [formData, setFormData] = useState({
+        projectId: undefined,
         name: undefined,
-        points: undefined,
-        'group-size': undefined,
+        courseId: undefined,
     })
     const { data, setTableType } = useContext(TableContext)
 
@@ -17,86 +27,88 @@ export const ProjectRow = () => {
 
     const onClickProject = async (e) => {
         e.preventDefault()
-        // TODO: call api POST request function here
-        // const tableWithAddedData = [...data.project.table, formData]
-        // data.project.setTable(tableWithAddedData)
-        const response = await axios.post('', formData)
-        data.project.setTable(response.data)
+        const response = await axios.post(projectUrl, formData)
+        data.project.setTable(response.data.data)
     }
 
     return (
-        <div
-            id="add-row"
-            className="d-flex align-items-center justify-content-center"
-        >
-            <Form>
-                <Row form>
-                    <Col sm={20}>
-                        <FormGroup>
-                            <Label for="name" sm={2}>
-                                Name
-                            </Label>
-                            <Input
-                                id="name"
-                                name="name"
-                                type="text"
-                                size={10}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        [e.target.name]: e.target.value,
-                                    })
-                                }
-                            />
-                        </FormGroup>
-                    </Col>
-                    <Col sm={20}>
-                        <FormGroup>
-                            <Label for="points" sm={2}>
-                                Points
-                            </Label>
-                            <Input
-                                id="points"
-                                name="points"
-                                type="number"
-                                size={10}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        [e.target.name]: e.target.value,
-                                    })
-                                }
-                            />
-                        </FormGroup>
-                    </Col>
-                    <Col sm={20}>
-                        <FormGroup>
-                            <Label for="group-size" sm={10}>
-                                Group Size
-                            </Label>
-                            <Input
-                                id="group-size"
-                                name="group-size"
-                                type="number"
-                                size={10}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        [e.target.name]: e.target.value,
-                                    })
-                                }
-                            />
-                        </FormGroup>
-                    </Col>
-                    <Button
-                        color="blue-grey"
-                        className="h-25 m-auto"
-                        onClick={onClickProject}
-                    >
-                        Add
-                    </Button>
-                </Row>
-            </Form>
+        <div>
+            <h1 className="tc mb4">Project Table</h1>
+            <div
+                id="add-row"
+                className="d-flex align-items-center justify-content-center"
+            >
+                <Form>
+                    <Row form>
+                        <Col sm={20}>
+                            <FormGroup>
+                                <Label for="projectId" sm={10}>
+                                    Project ID
+                                </Label>
+                                <Input
+                                    id="projectId"
+                                    name="projectId"
+                                    type="number"
+                                    size={10}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                />
+                                <FormText>required</FormText>
+                            </FormGroup>
+                        </Col>
+                        <Col sm={20}>
+                            <FormGroup>
+                                <Label for="name" sm={2}>
+                                    Name
+                                </Label>
+                                <Input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    size={10}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                />
+                            </FormGroup>
+                        </Col>
+                        <Col sm={20}>
+                            <FormGroup>
+                                <Label for="courseId" sm={10}>
+                                    Course ID
+                                </Label>
+                                <Input
+                                    id="courseId"
+                                    name="courseId"
+                                    type="number"
+                                    size={10}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                />
+                            </FormGroup>
+                        </Col>
+                        <Button
+                            color="blue-grey"
+                            className="h-25 m-auto"
+                            disabled={!formData.courseId}
+                            onClick={onClickProject}
+                        >
+                            Add
+                        </Button>
+                    </Row>
+                </Form>
+            </div>
         </div>
     )
 }
