@@ -82,7 +82,7 @@ export const MajorRelationRow = () => {
                         <Button
                             color="blue-grey"
                             className="h-25 m-auto"
-                            disabled={!formData.majorID || !formData.studentId}
+                            disabled={!formData.majorId || !formData.studentId}
                             onClick={onClickMajor}
                         >
                             Add

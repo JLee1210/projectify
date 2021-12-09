@@ -101,7 +101,7 @@ export const DepartmentRow = () => {
                         <Button
                             color="blue-grey"
                             className="h-25 m-auto"
-                            disabled={!formData.departmentID}
+                            disabled={!formData.departmentId}
                             onClick={onClickDepartment}
                         >
                             Add

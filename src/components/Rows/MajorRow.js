@@ -81,7 +81,7 @@ export const MajorRow = () => {
                         <Button
                             color="blue-grey"
                             className="h-25 m-auto"
-                            disabled={!formData.majorID}
+                            disabled={!formData.majorId}
                             onClick={onClickMajor}
                         >
                             Add
