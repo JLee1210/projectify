@@ -51,7 +51,7 @@ def edit(conn, args, table):
     conn.execute()
 
 
-def view_table(conn, table):
+def table_to_json(conn, table):
     cursor = conn.cursor()
     cursor.execute(f"SELECT * FROM {table}")
     data = cursor.fetchall()

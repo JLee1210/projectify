@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-from backEnd import add, view_table
+from backEnd import add, table_to_json
 
 
 app = Flask(__name__)
@@ -18,15 +18,15 @@ def tables(table):
         newData = [value for key, value in args.items()]
         add(conn, newData, table)
         conn.commit()
-        returnJsonData = jsonify({'data': view_table(conn, table),
+        returnJsonData = jsonify({'data': table_to_json(conn, table),
                                     'status': 'SUCCESS'})
         conn.close()
         return returnJsonData
 
     if request.method == "GET":
         conn.commit()
-        returnJsonData = jsonify({'data': view_table(conn, table),
-                                  'status': 'SUCCESS'})
+        returnJsonData = jsonify({'data': table_to_json(conn, table),
+                                    'status': 'SUCCESS'})
         conn.close()
         return returnJsonData
 
