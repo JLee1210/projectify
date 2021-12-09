@@ -10,16 +10,20 @@ import { HomePage } from '../pages/HomePage'
 export const InputRowRoutes = () => (
     <Switch>
         <Route exact path="/projectify" component={HomePage} />
-        <Route exact path="/projectify/class" component={CourseRow} />
-        <Route exact path="/projectify/department" component={DepartmentRow} />
-        <Route exact path="/projectify/major" component={MajorRow} />
+        <Route exact path="/projectify/tables/course" component={CourseRow} />
         <Route
             exact
-            path="/projectify/major_relation"
+            path="/projectify/tables/department"
+            component={DepartmentRow}
+        />
+        <Route exact path="/projectify/tables/major" component={MajorRow} />
+        <Route
+            exact
+            path="/projectify/tables/major_relation"
             component={MajorRelationRow}
         />
-        <Route exact path="/projectify/project" component={ProjectRow} />
-        <Route exact path="/projectify/student" component={StudentRow} />
+        <Route exact path="/projectify/tables/project" component={ProjectRow} />
+        <Route exact path="/projectify/tables/student" component={StudentRow} />
         <Route
             render={() => (
                 <h1 className="blue-grey-text text-center">
