@@ -160,6 +160,33 @@ export const majorRelationHeader = [
     },
 ]
 
+export const studentProjectsHeader = [
+    {
+        label: 'Student ID',
+        field: 'studentId',
+        sort: 'asc',
+        width: 120,
+    },
+    {
+        label: 'Student Name',
+        field: 'studentName',
+        sort: 'asc',
+        width: 200,
+    },
+    {
+        label: 'Project ID',
+        field: 'projectId',
+        sort: 'asc',
+        width: 120,
+    },
+    {
+        label: 'Project Name',
+        field: 'projectName',
+        sort: 'asc',
+        width: 200,
+    },
+]
+
 export const tableHeaderChooser = {
     course: courseHeader,
     department: departmentHeader,
@@ -167,4 +194,5 @@ export const tableHeaderChooser = {
     majorRelation: majorRelationHeader,
     project: projectHeader,
     student: studentHeader,
+    studentProjects: studentProjectsHeader,
 }
