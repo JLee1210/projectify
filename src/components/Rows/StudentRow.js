@@ -1,3 +1,4 @@
+import { useCallback, useContext, useState, useEffect } from 'react'
 import {
     Button,
     Form,
@@ -8,10 +9,11 @@ import {
     Col,
     Row,
 } from 'reactstrap'
-import { useContext, useState, useEffect } from 'react'
-import { TableContext } from '../../context/TableProvider'
-import axios from 'axios'
+
 import { studentUrl } from '../../constants/endpoints'
+import { EditContext } from '../../context/EditProvider'
+import { TableContext } from '../../context/TableProvider'
+import { addRow, editRow } from '../../functions/restApi'
 
 export const StudentRow = () => {
     const [formData, setFormData] = useState({
@@ -21,16 +23,52 @@ export const StudentRow = () => {
         gpa: undefined,
         gradClass: undefined,
     })
-    const { data, setTableType } = useContext(TableContext)
+    const { data, setTableType, tableType } = useContext(TableContext)
+    const {
+        isEdit,
+        setIsEdit,
+        editTableType,
+        setEditTableType,
+        editData,
+        setEditData,
+    } = useContext(EditContext)
+
+    const resetEditData = useCallback(() => {
+        setEditData({})
+        setEditTableType('')
+        setIsEdit(false)
+    }, [setEditData, setEditTableType, setIsEdit])
+
+    const [buttonNameText, setButtonNameText] = useState('Add')
 
     useEffect(() => {
         setTableType('student')
-    }, [setTableType])
+        resetEditData()
+    }, [setTableType, resetEditData])
 
+    useEffect(() => {
+        editTableType === 'student' && setFormData(editData)
+        isEdit && setButtonNameText('Update')
+    }, [editData, editTableType, isEdit])
+
+    const isEditRow = isEdit && editTableType === 'student'
     const onClickStudent = async (e) => {
         e.preventDefault()
-        const response = await axios.post(studentUrl, formData)
-        data.student.setTable(response.data.data)
+        addRow(tableType, formData, data, studentUrl)
+    }
+
+    const onEditStudent = async (e) => {
+        e.preventDefault()
+        editRow(tableType, formData, data)
+        setFormData({
+            studentId: '',
+            projectId: '',
+            name: '',
+            gpa: '',
+            gradClass: '',
+        })
+        setButtonNameText('Add')
+        resetEditData()
     }
 
     return (
@@ -50,15 +88,16 @@ export const StudentRow = () => {
                                 <Input
                                     id="studentId"
                                     name="studentId"
-                                    type="number"
-                                    size={1}
-                                    required
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    required
+                                    size={1}
+                                    type="number"
+                                    value={formData.studentId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
@@ -71,14 +110,15 @@ export const StudentRow = () => {
                                 <Input
                                     id="name"
                                     name="name"
-                                    type="text"
-                                    size={20}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={20}
+                                    type="text"
+                                    value={formData.name}
                                 />
                             </FormGroup>
                         </Col>
@@ -90,14 +130,15 @@ export const StudentRow = () => {
                                 <Input
                                     id="projectId"
                                     name="projectId"
-                                    type="number"
-                                    size={20}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={20}
+                                    type="number"
+                                    value={formData.projectId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
@@ -110,14 +151,15 @@ export const StudentRow = () => {
                                 <Input
                                     id="gpa"
                                     name="gpa"
-                                    type="number"
-                                    size={10}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={10}
+                                    type="number"
+                                    value={formData.gpa}
                                 />
                             </FormGroup>
                         </Col>
@@ -129,26 +171,27 @@ export const StudentRow = () => {
                                 <Input
                                     id="gradClass"
                                     name="gradClass"
-                                    type="text"
-                                    size={20}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={20}
+                                    type="text"
+                                    value={formData.gradClass}
                                 />
                             </FormGroup>
                         </Col>
                         <Button
-                            color="blue-grey"
                             className="h-25 m-auto"
+                            color="blue-grey"
                             disabled={
                                 !formData.studentId || !formData.projectId
                             }
-                            onClick={onClickStudent}
+                            onClick={isEditRow ? onEditStudent : onClickStudent}
                         >
-                            Add
+                            {buttonNameText}
                         </Button>
                     </Row>
                 </Form>
