@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import {
     MDBNavbar,
     MDBNavbarBrand,
@@ -12,11 +12,9 @@ import {
     MDBDropdownMenu,
     MDBDropdownItem,
 } from 'mdbreact'
-import { TableContext } from '../context/TableProvider'
 
 export const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const { setTableType } = useContext(TableContext)
 
     return (
         <div id="navbar">
@@ -87,9 +85,9 @@ export const NavBar = () => {
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/projectify/reports/report1"
+                                        to="/projectify/reports/studentProjects"
                                     >
-                                        Report 1
+                                        Student Projects Report
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"

@@ -1,10 +1,12 @@
-import { InputRowRoutes } from '../components/InputRowRoutes'
-import { NavBar } from '../components/NavBar'
-import { DynamicTable } from '../components/DynamicTable'
-import { Fragment, useContext, useEffect } from 'react'
-import { TableContext } from '../context/TableProvider'
-import { MDBIcon } from 'mdbreact'
 import useFetch from 'react-fetch-hook'
+import { MDBIcon } from 'mdbreact'
+import { Fragment, useContext, useEffect } from 'react'
+import { Route, Switch } from 'react-router-dom'
+
+import { DynamicTable } from '../components/DynamicTable'
+import { ReportRoutes } from '../routes/ReportRoutes'
+import { InputRowRoutes } from '../routes/InputRowRoutes'
+import { NavBar } from '../components/NavBar'
 import {
     courseUrl,
     departmentUrl,
@@ -13,6 +15,9 @@ import {
     projectUrl,
     studentUrl,
 } from '../constants/endpoints'
+import { TableContext } from '../context/TableProvider'
+import { HomePage } from '../pages/HomePage'
+import { Input } from 'reactstrap'
 
 // const test = [
 //     {
@@ -37,7 +42,6 @@ import {
 
 export const TablesPage = () => {
     const { data } = useContext(TableContext)
-    //TODO: fill this with data
     const studentFetch = useFetch(studentUrl)
     const courseFetch = useFetch(courseUrl)
     const projectFetch = useFetch(projectUrl)
@@ -85,8 +89,25 @@ export const TablesPage = () => {
         <Fragment>
             <NavBar />
             <div id="flex" className="d-flex flex-column">
-                <InputRowRoutes />
-                <div className="bt blue-grey-text"> </div>
+                <Switch>
+                    <Route exact path="/projectify" component={HomePage} />
+                    <Route
+                        path="/projectify/tables"
+                        component={InputRowRoutes}
+                    />
+                    <Route
+                        path="/projectify/reports"
+                        component={ReportRoutes}
+                    />
+                    <Route
+                        render={() => (
+                            <h1 className="blue-grey-text text-center">
+                                Page Not Found, make sure the URL is correct.
+                            </h1>
+                        )}
+                    />
+                </Switch>
+                <div className="bt blue-grey-text" />
                 {isTableLoading ? (
                     <MDBIcon icon="spinner" spin={true} />
                 ) : (
