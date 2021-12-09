@@ -47,7 +47,7 @@ export const NavBar = () => {
                                         to="/projectify/class"
                                         onClick={() => setTableType('class')}
                                     >
-                                        Class
+                                        Course
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"
@@ -64,6 +64,16 @@ export const NavBar = () => {
                                         onClick={() => setTableType('major')}
                                     >
                                         Major
+                                    </MDBDropdownItem>
+                                    <MDBDropdownItem
+                                        className="default-color"
+                                        tag={MDBNavLink}
+                                        to="/projectify/major_relation"
+                                        onClick={() =>
+                                            setTableType('majorRelation')
+                                        }
+                                    >
+                                        Major Relations
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"

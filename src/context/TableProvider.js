@@ -4,24 +4,29 @@ export const TableContext = createContext()
 
 export const TableProvider = ({ children }) => {
     const [tableType, setTableType] = useState()
-    const [studentTable, setStudentTable] = useState()
-    const [classTable, setClassTable] = useState()
-    const [projectTable, setProjectTable] = useState()
-    const [majorTable, setMajorTable] = useState()
+    const [courseTable, setCourseTable] = useState()
     const [departmentTable, setDepartmentTable] = useState()
+    const [majorTable, setMajorTable] = useState()
+    const [majorRelationTable, setMajorRelationTable] = useState()
+    const [projectTable, setProjectTable] = useState()
+    const [studentTable, setStudentTable] = useState()
 
     const value = {
         tableType,
         setTableType,
         data: {
-            student: { table: studentTable, setTable: setStudentTable },
-            class: { table: classTable, setTable: setClassTable },
-            project: { table: projectTable, setTable: setProjectTable },
-            major: { table: majorTable, setTable: setMajorTable },
+            course: { table: courseTable, setTable: setCourseTable },
             department: {
                 table: departmentTable,
                 setTable: setDepartmentTable,
             },
+            major: { table: majorTable, setTable: setMajorTable },
+            majorRelation: {
+                table: majorRelationTable,
+                setTable: setMajorRelationTable,
+            },
+            project: { table: projectTable, setTable: setProjectTable },
+            student: { table: studentTable, setTable: setStudentTable },
         },
     }
 

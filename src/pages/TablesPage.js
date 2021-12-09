@@ -6,9 +6,10 @@ import { TableContext } from '../context/TableProvider'
 import { MDBIcon } from 'mdbreact'
 import useFetch from 'react-fetch-hook'
 import {
-    classUrl,
+    courseUrl,
     departmentUrl,
     majorUrl,
+    majorRelationUrl,
     projectUrl,
     studentUrl,
 } from '../constants/endpoints'
@@ -38,42 +39,48 @@ export const TablesPage = () => {
     const { data } = useContext(TableContext)
     //TODO: fill this with data
     const studentFetch = useFetch(studentUrl)
-    const classFetch = useFetch(classUrl)
+    const courseFetch = useFetch(courseUrl)
     const projectFetch = useFetch(projectUrl)
     const departmentFetch = useFetch(departmentUrl)
     const majorFetch = useFetch(majorUrl)
+    const majorRelationFetch = useFetch(majorRelationUrl)
 
     useEffect(() => {
         if (!studentFetch.isLoading) {
             data['student'].setTable(studentFetch.data.data)
         }
         if (!projectFetch.isLoading) {
-            data['project'].setTable([])
+            data['project'].setTable(projectFetch.data.data)
         }
-        if (!classFetch.isLoading) {
-            data['class'].setTable([])
+        if (!courseFetch.isLoading) {
+            data['course'].setTable(courseFetch.data.data)
         }
         if (!majorFetch.isLoading) {
-            data['major'].setTable([])
+            data['major'].setTable(majorFetch.data.data)
+        }
+        if (!majorRelationFetch.isLoading) {
+            data['majorRelation'].setTable(majorRelationFetch.data.data)
         }
         if (!departmentFetch.isLoading) {
-            data['department'].setTable([])
+            data['department'].setTable(departmentFetch.data.data)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         studentFetch.isLoading,
-        classFetch.isLoading,
+        courseFetch.isLoading,
         projectFetch.isLoading,
         departmentFetch.isLoading,
         majorFetch.isLoading,
+        majorRelationFetch.isLoading,
     ])
 
     const isTableLoading =
         studentFetch.isLoading ||
-        classFetch.isLoading ||
+        courseFetch.isLoading ||
         projectFetch.isLoading ||
         departmentFetch.isLoading ||
-        majorFetch.isLoading
+        majorFetch.isLoading ||
+        majorRelationFetch.isLoading
     return (
         <Fragment>
             <NavBar />

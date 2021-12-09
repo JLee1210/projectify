@@ -1,6 +1,6 @@
 import { MDBDataTableV5 } from 'mdbreact'
 import { EditDeleteButton } from './EditDeleteButton'
-import { tableHeaderChooser } from '../constants/headers'
+import { tableHeaderChooser } from '../constants/tableHeaders'
 import { useContext } from 'react'
 import { TableContext } from '../context/TableProvider'
 
