@@ -1,12 +1,12 @@
 import { useCallback, useContext, useState, useEffect } from 'react'
 import {
     Button,
+    Col,
     Form,
     FormGroup,
     FormText,
     Input,
     Label,
-    Col,
     Row,
 } from 'reactstrap'
 
@@ -16,14 +16,16 @@ import { TableContext } from '../../context/TableProvider'
 import { addRow, editRow } from '../../functions/restApi'
 
 export const StudentRow = () => {
-    const [formData, setFormData] = useState({
-        studentId: undefined,
-        projectId: undefined,
-        name: undefined,
-        gpa: undefined,
-        gradClass: undefined,
-    })
-    const { data, setTableType, tableType } = useContext(TableContext)
+    const initialFormState = {
+        studentId: '',
+        projectId: '',
+        name: '',
+        gpa: '',
+        gradClass: '',
+    }
+    const [formData, setFormData] = useState(initialFormState)
+    const [buttonNameText, setButtonNameText] = useState('Add')
+    const { data, setTableType } = useContext(TableContext)
     const {
         isEdit,
         setIsEdit,
@@ -39,8 +41,6 @@ export const StudentRow = () => {
         setIsEdit(false)
     }, [setEditData, setEditTableType, setIsEdit])
 
-    const [buttonNameText, setButtonNameText] = useState('Add')
-
     useEffect(() => {
         setTableType('student')
         resetEditData()
@@ -52,21 +52,17 @@ export const StudentRow = () => {
     }, [editData, editTableType, isEdit])
 
     const isEditRow = isEdit && editTableType === 'student'
-    const onClickStudent = async (e) => {
+
+    const onClickStudent = (e) => {
         e.preventDefault()
-        addRow(tableType, formData, data, studentUrl)
+        addRow('student', formData, data, studentUrl)
+        setFormData(initialFormState)
     }
 
-    const onEditStudent = async (e) => {
+    const onEditStudent = (e) => {
         e.preventDefault()
-        editRow(tableType, formData, data)
-        setFormData({
-            studentId: '',
-            projectId: '',
-            name: '',
-            gpa: '',
-            gradClass: '',
-        })
+        editRow('student', formData, data)
+        setFormData(initialFormState)
         setButtonNameText('Add')
         resetEditData()
     }
