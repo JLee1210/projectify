@@ -26,23 +26,39 @@ def get_table_schema(table):
         return MAJOR_RELATION_SCHEMA
 
 
-def add(conn, args, table):
+def add(conn, row, table):
     cursor = conn.cursor()
     cursor.execute(f'INSERT INTO {table} {get_table_schema(table)} \nVALUES \
-                   {tuple(args)}')
+                   {tuple(row)}')
     conn.commit()
-    print('Added record ID ' + str(args[0]) + ' to table ' + table)
+    print('Added record ID ' + str(row[0]) + ' to table ' + table)
 
 
-def delete(conn, args, table):
-    conn.execute()
-# Executing a custom search query
-
-
-def retrieve(conn, args):
-    conn.execute()
-
-# Replacing a given row with the updated version of that row
+def delete(conn, row, table):
+    cursor = conn.cursor()
+    params = []
+    if table == "student":
+        params.append(row[0])
+        params.append(row[1])
+        conn.execute(sql.DELETE_STUDENT_ROW, tuple(params))
+    elif table == "course":
+        params.append(row[0])
+        conn.execute(sql.DELETE_COURSE_ROW, tuple(params))
+    elif table == "project":
+        params.append(row[0])
+        conn.execute(sql.DELETE_PROJECT_ROW, tuple(params))
+    elif table == "department":
+        params.append(row[0])
+        conn.execute(sql.DELETE_DEPARTMENT_ROW, tuple(params))
+    elif table == "major":
+        params.append(row[0])
+        conn.execute(sql.DELETE_MAJOR_ROW, tuple(params))
+    elif table == "major_relation":
+        params.append(row[0])
+        params.append(row[1])
+        conn.execute(sql.DELETE_MAJOR_RELATION_ROW, tuple(params))
+    conn.commit()
+    print('Deleted record ID ' + str(row[0]) + ' to table ' + table)
 
 
 def edit(conn, old_row, new_row, table):
@@ -69,8 +85,12 @@ def edit(conn, old_row, new_row, table):
         params.append(old_row[0])
         params.append(old_row[1])
         conn.execute(sql.UPDATE_MAJOR_RELATION_ROW, tuple(params))
-
     conn.commit()
+    print('Updated record ID ' + str(row[0]) + ' to table ' + table)
+
+
+def retrieve(conn, args):
+    conn.execute()
 
 
 def table_to_json(conn, table):

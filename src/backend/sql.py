@@ -1,3 +1,27 @@
+DELETE_COURSE_ROW = """ DELETE FROM course
+                        WHERE courseid = ?
+                    """
+
+DELETE_DEPARTMENT_ROW = """ DELETE FROM department
+                            WHERE departmentid = ?
+                        """
+
+DELETE_MAJOR_ROW = """ DELETE FROM major
+                       WHERE majorid = ?
+                  """
+
+DELETE_MAJOR_RELATION_ROW = """ DELETE FROM major_relation
+                                WHERE studentid = ? AND majorid = ?
+                           """
+
+DELETE_PROJECT_ROW = """ DELETE FROM project
+                         WHERE projectid = ?
+                    """
+
+DELETE_STUDENT_ROW = """ DELETE FROM student
+                         WHERE studentid = ? AND projectid = ?
+                    """
+
 UPDATE_COURSE_ROW = """ UPDATE course
                         SET courseid = ?,
                             coursename = ?,
