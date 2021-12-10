@@ -40,11 +40,11 @@ export const TablesPage = () => {
         if (!majorRelationFetch.isLoading) {
             data['majorRelation'].setTable(majorRelationFetch.data.data)
         }
-        if (!projectFetch.isLoading) {
-            data['project'].setTable(projectFetch.data.data)
-        }
         if (!studentFetch.isLoading) {
             data['student'].setTable(studentFetch.data.data)
+        }
+        if (!projectFetch.isLoading) {
+            data['project'].setTable(projectFetch.data.data)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [

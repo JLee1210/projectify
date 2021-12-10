@@ -6,8 +6,7 @@ export const addRow = async (tableType, rowData, data, url = '') => {
 }
 
 export const deleteRow = async (tableType, rowData, data, url = '') => {
-    //TODO: Add url for delete request
-    const response = await axios.delete(url, rowData)
+    const response = await axios.delete(url, { data: rowData })
     data[tableType].setTable(response.data.data)
 }
 

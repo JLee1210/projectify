@@ -6,3 +6,12 @@ export const majorUrl = `${localHost}/table/major`
 export const majorRelationUrl = `${localHost}/table/major_relation`
 export const projectUrl = `${localHost}/table/project`
 export const studentUrl = `${localHost}/table/student`
+
+export const urlByTable = {
+    course: courseUrl,
+    department: departmentUrl,
+    major: majorUrl,
+    majorRelation: majorRelationUrl,
+    project: projectUrl,
+    student: studentUrl,
+}

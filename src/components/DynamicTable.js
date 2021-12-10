@@ -1,6 +1,7 @@
 import { MDBDataTableV5 } from 'mdbreact'
 import { useContext } from 'react'
 
+import { urlByTable } from '../constants/endpoints'
 import { tableHeaderChooser } from '../constants/tableHeaders'
 import { EditContext } from '../context/EditProvider'
 import { TableContext } from '../context/TableProvider'
@@ -18,7 +19,14 @@ export const DynamicTable = (props) => {
             ...rowData,
             button: (
                 <EditDeleteButton
-                    onDelete={() => deleteRow(tableType, rowData, data)}
+                    onDelete={() => {
+                        deleteRow(
+                            tableType,
+                            rowData,
+                            data,
+                            urlByTable[tableType]
+                        )
+                    }}
                     onEdit={() => {
                         setIsEdit(true)
                         setEditTableType(tableType)

@@ -1,6 +1,6 @@
 import { MDBBtn, MDBIcon } from 'mdbreact'
 
-export const EditDeleteButton = ({ onEdit, onDelete }) => (
+export const EditDeleteButton = ({ onDelete, onEdit }) => (
     <div>
         <MDBBtn floating="true" size="sm" color="blue-grey" onClick={onEdit}>
             <MDBIcon icon="edit" />
