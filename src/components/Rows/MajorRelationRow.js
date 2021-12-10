@@ -1,33 +1,67 @@
+import { useCallback, useContext, useState, useEffect } from 'react'
 import {
     Button,
+    Col,
     Form,
     FormGroup,
     FormText,
     Input,
     Label,
-    Col,
     Row,
 } from 'reactstrap'
-import { useContext, useState, useEffect } from 'react'
-import { TableContext } from '../../context/TableProvider'
-import axios from 'axios'
+
 import { majorRelationUrl } from '../../constants/endpoints'
+import { EditContext } from '../../context/EditProvider'
+import { TableContext } from '../../context/TableProvider'
+import { addRow, editRow } from '../../functions/restApi'
 
 export const MajorRelationRow = () => {
-    const [formData, setFormData] = useState({
-        studentId: undefined,
-        majorId: undefined,
-    })
+    const initialFormState = {
+        studentId: '',
+        majorId: '',
+    }
+    const [formData, setFormData] = useState(initialFormState)
+    const [buttonNameText, setButtonNameText] = useState('Add')
     const { data, setTableType } = useContext(TableContext)
+    const {
+        isEdit,
+        setIsEdit,
+        editTableType,
+        setEditTableType,
+        editData,
+        setEditData,
+    } = useContext(EditContext)
+
+    const resetEditData = useCallback(() => {
+        setEditData({})
+        setEditTableType('')
+        setIsEdit(false)
+    }, [setEditData, setEditTableType, setIsEdit])
 
     useEffect(() => {
         setTableType('majorRelation')
-    }, [setTableType])
+        resetEditData()
+    }, [setTableType, resetEditData])
 
-    const onClickMajor = async (e) => {
+    useEffect(() => {
+        editTableType === 'majorRelation' && setFormData(editData)
+        isEdit && setButtonNameText('Update')
+    }, [editData, editTableType, isEdit])
+
+    const isEditRow = isEdit && editTableType === 'majorRelation'
+
+    const onClickMajorRelation = (e) => {
         e.preventDefault()
-        const response = await axios.post(majorRelationUrl, formData)
-        data.majorRelation.setTable(response.data.data)
+        addRow('majorRelation', formData, data, majorRelationUrl)
+        setFormData(initialFormState)
+    }
+
+    const onEditMajorRelation = (e) => {
+        e.preventDefault()
+        editRow('majorRelationnt', formData, data)
+        setFormData(initialFormState)
+        setButtonNameText('Add')
+        resetEditData()
     }
 
     return (
@@ -47,14 +81,16 @@ export const MajorRelationRow = () => {
                                 <Input
                                     id="studentId"
                                     name="studentId"
-                                    type="number"
-                                    size={10}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    required
+                                    size={10}
+                                    type="number"
+                                    value={formData.studentId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
@@ -67,14 +103,16 @@ export const MajorRelationRow = () => {
                                 <Input
                                     id="majorId"
                                     name="majorId"
-                                    type="number"
-                                    size={10}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    required
+                                    size={10}
+                                    type="number"
+                                    value={formData.majorId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
@@ -83,9 +121,13 @@ export const MajorRelationRow = () => {
                             color="blue-grey"
                             className="h-25 m-auto"
                             disabled={!formData.majorId || !formData.studentId}
-                            onClick={onClickMajor}
+                            onClick={
+                                isEditRow
+                                    ? onEditMajorRelation
+                                    : onClickMajorRelation
+                            }
                         >
-                            Add
+                            {buttonNameText}
                         </Button>
                     </Row>
                 </Form>
