@@ -1,34 +1,68 @@
+import { useCallback, useContext, useState, useEffect } from 'react'
 import {
     Button,
+    Col,
     Form,
     FormGroup,
     FormText,
     Input,
     Label,
-    Col,
     Row,
 } from 'reactstrap'
-import { useContext, useState, useEffect } from 'react'
-import { TableContext } from '../../context/TableProvider'
-import axios from 'axios'
+
 import { projectUrl } from '../../constants/endpoints'
+import { EditContext } from '../../context/EditProvider'
+import { TableContext } from '../../context/TableProvider'
+import { addRow, editRow } from '../../functions/restApi'
 
 export const ProjectRow = () => {
-    const [formData, setFormData] = useState({
-        projectId: undefined,
-        name: undefined,
-        courseId: undefined,
-    })
+    const initialFormState = {
+        projectId: '',
+        name: '',
+        courseId: '',
+    }
+    const [formData, setFormData] = useState(initialFormState)
+    const [buttonNameText, setButtonNameText] = useState('Add')
     const { data, setTableType } = useContext(TableContext)
+    const {
+        isEdit,
+        setIsEdit,
+        editTableType,
+        setEditTableType,
+        editData,
+        setEditData,
+    } = useContext(EditContext)
+
+    const resetEditData = useCallback(() => {
+        setEditData({})
+        setEditTableType('')
+        setIsEdit(false)
+    }, [setEditData, setEditTableType, setIsEdit])
 
     useEffect(() => {
         setTableType('project')
-    }, [setTableType])
+        resetEditData()
+    }, [setTableType, resetEditData])
 
-    const onClickProject = async (e) => {
+    useEffect(() => {
+        editTableType === 'project' && setFormData(editData)
+        isEdit && setButtonNameText('Update')
+    }, [editData, editTableType, isEdit])
+
+    const isEditRow = isEdit && editTableType === 'project'
+
+    const onClickProject = (e) => {
         e.preventDefault()
-        const response = await axios.post(projectUrl, formData)
-        data.project.setTable(response.data.data)
+        addRow('project', formData, data, projectUrl)
+        setFormData(initialFormState)
+    }
+
+    const onEditProject = (e) => {
+        e.preventDefault()
+        editRow('project', formData, data)
+        setFormData(initialFormState)
+        setButtonNameText('Add')
+        resetEditData()
     }
 
     return (
@@ -48,14 +82,16 @@ export const ProjectRow = () => {
                                 <Input
                                     id="projectId"
                                     name="projectId"
-                                    type="number"
-                                    size={10}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    required
+                                    size={10}
+                                    type="number"
+                                    value={formData.projectId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
@@ -68,14 +104,15 @@ export const ProjectRow = () => {
                                 <Input
                                     id="name"
                                     name="name"
-                                    type="text"
-                                    size={10}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={10}
+                                    type="text"
+                                    value={formData.name}
                                 />
                             </FormGroup>
                         </Col>
@@ -87,14 +124,15 @@ export const ProjectRow = () => {
                                 <Input
                                     id="courseId"
                                     name="courseId"
-                                    type="number"
-                                    size={10}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={10}
+                                    type="number"
+                                    value={formData.courseId}
                                 />
                             </FormGroup>
                         </Col>
@@ -102,9 +140,9 @@ export const ProjectRow = () => {
                             color="blue-grey"
                             className="h-25 m-auto"
                             disabled={!formData.courseId}
-                            onClick={onClickProject}
+                            onClick={isEditRow ? onEditProject : onClickProject}
                         >
-                            Add
+                            {buttonNameText}
                         </Button>
                     </Row>
                 </Form>
