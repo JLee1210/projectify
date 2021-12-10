@@ -10,16 +10,17 @@ import {
     Row,
 } from 'reactstrap'
 
-import { projectUrl } from '../../constants/endpoints'
+import { courseUrl } from '../../constants/endpoints'
 import { EditContext } from '../../context/EditProvider'
 import { TableContext } from '../../context/TableProvider'
 import { addRow, editRow } from '../../functions/restApi'
 
-export const ProjectRow = () => {
+export const CourseRow = () => {
     const initialFormState = {
-        projectId: '',
-        name: '',
         courseId: '',
+        name: '',
+        instructor: '',
+        departmentId: '',
     }
     const [formData, setFormData] = useState(initialFormState)
     const [buttonNameText, setButtonNameText] = useState('Add')
@@ -40,32 +41,32 @@ export const ProjectRow = () => {
     }, [setEditData, setEditTableType, setIsEdit])
 
     useEffect(() => {
-        setTableType('project')
+        setTableType('course')
         resetEditData()
     }, [setTableType, resetEditData])
 
     useEffect(() => {
-        isEdit && editTableType === 'project' && setFormData(editData)
+        isEdit && editTableType === 'course' && setFormData(editData)
         isEdit && setButtonNameText('Update')
     }, [editData, editTableType, isEdit])
 
-    const isEditRow = isEdit && editTableType === 'project'
+    const isEditRow = isEdit && editTableType === 'course'
 
-    const onClickProject = (e) => {
+    const onClickCourse = (e) => {
         e.preventDefault()
-        addRow('project', formData, data, projectUrl)
+        addRow('course', formData, data, courseUrl)
         setFormData(initialFormState)
     }
 
-    const onEditProject = (e) => {
+    const onEditCourse = (e) => {
         e.preventDefault()
         formData.courseId = parseInt(formData.courseId)
-        formData.projectId = parseInt(formData.projectId)
+        formData.departmentId = parseInt(formData.departmentId)
         let editDataObject = {
             oldData: { ...editData },
             newData: { ...formData },
         }
-        editRow('project', editDataObject, data, projectUrl)
+        editRow('course', editDataObject, data, courseUrl)
         setFormData(initialFormState)
         setButtonNameText('Add')
         resetEditData()
@@ -73,7 +74,7 @@ export const ProjectRow = () => {
 
     return (
         <div>
-            <h1 className="tc mb4">Project Table</h1>
+            <h1 className="tc mb4">Course Table</h1>
             <div
                 id="add-row"
                 className="d-flex align-items-center justify-content-center"
@@ -82,12 +83,12 @@ export const ProjectRow = () => {
                     <Row form>
                         <Col sm={20}>
                             <FormGroup>
-                                <Label for="projectId" sm={10}>
-                                    Project ID
+                                <Label for="courseId" sm={10}>
+                                    Course ID
                                 </Label>
                                 <Input
-                                    id="projectId"
-                                    name="projectId"
+                                    id="courseId"
+                                    name="courseId"
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
@@ -97,7 +98,7 @@ export const ProjectRow = () => {
                                     required
                                     size={10}
                                     type="number"
-                                    value={formData.projectId}
+                                    value={formData.courseId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
@@ -116,7 +117,7 @@ export const ProjectRow = () => {
                                             [e.target.name]: e.target.value,
                                         })
                                     }
-                                    size={10}
+                                    size={20}
                                     type="text"
                                     value={formData.name}
                                 />
@@ -124,12 +125,32 @@ export const ProjectRow = () => {
                         </Col>
                         <Col sm={20}>
                             <FormGroup>
-                                <Label for="courseId" sm={10}>
-                                    Course ID
+                                <Label for="instructor" sm={2}>
+                                    Instructor
                                 </Label>
                                 <Input
-                                    id="courseId"
-                                    name="courseId"
+                                    id="instructor"
+                                    name="instructor"
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                    size={20}
+                                    type="text"
+                                    value={formData.instructor}
+                                />
+                            </FormGroup>
+                        </Col>
+                        <Col sm={20}>
+                            <FormGroup>
+                                <Label for="departmentId" sm={10}>
+                                    Department ID
+                                </Label>
+                                <Input
+                                    id="departmentId"
+                                    name="departmentId"
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
@@ -138,7 +159,7 @@ export const ProjectRow = () => {
                                     }
                                     size={10}
                                     type="number"
-                                    value={formData.courseId}
+                                    value={formData.departmentId}
                                 />
                             </FormGroup>
                         </Col>
@@ -146,7 +167,7 @@ export const ProjectRow = () => {
                             color="blue-grey"
                             className="h-25 m-auto"
                             disabled={!formData.courseId}
-                            onClick={isEditRow ? onEditProject : onClickProject}
+                            onClick={isEditRow ? onEditCourse : onClickCourse}
                         >
                             {buttonNameText}
                         </Button>

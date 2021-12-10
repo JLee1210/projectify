@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import {
     MDBNavbar,
     MDBNavbarBrand,
@@ -12,11 +12,9 @@ import {
     MDBDropdownMenu,
     MDBDropdownItem,
 } from 'mdbreact'
-import { TableContext } from '../context/TableProvider'
 
 export const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const { setTableType } = useContext(TableContext)
 
     return (
         <div id="navbar">
@@ -36,42 +34,42 @@ export const NavBar = () => {
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/projectify/student"
-                                        onClick={() => setTableType('student')}
+                                        to="/projectify/tables/student"
                                     >
                                         Student
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/projectify/class"
-                                        onClick={() => setTableType('class')}
+                                        to="/projectify/tables/course"
                                     >
-                                        Class
+                                        Course
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/projectify/project"
-                                        onClick={() => setTableType('project')}
+                                        to="/projectify/tables/project"
                                     >
                                         Project
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/projectify/major"
-                                        onClick={() => setTableType('major')}
+                                        to="/projectify/tables/major"
                                     >
                                         Major
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/projectify/department"
-                                        onClick={() =>
-                                            setTableType('department')
-                                        }
+                                        to="/projectify/tables/major_relation"
+                                    >
+                                        Major Relations
+                                    </MDBDropdownItem>
+                                    <MDBDropdownItem
+                                        className="default-color"
+                                        tag={MDBNavLink}
+                                        to="/projectify/tables/department"
                                     >
                                         Department
                                     </MDBDropdownItem>
@@ -79,7 +77,41 @@ export const NavBar = () => {
                             </MDBDropdown>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <MDBNavLink to="#">Reports</MDBNavLink>
+                            <MDBDropdown>
+                                <MDBDropdownToggle nav caret>
+                                    Reports
+                                </MDBDropdownToggle>
+                                <MDBDropdownMenu className="default-color">
+                                    <MDBDropdownItem
+                                        className="default-color"
+                                        tag={MDBNavLink}
+                                        to="/projectify/reports/studentProjects"
+                                    >
+                                        Student Projects Report
+                                    </MDBDropdownItem>
+                                    <MDBDropdownItem
+                                        className="default-color"
+                                        tag={MDBNavLink}
+                                        to="/projectify/reports/report2"
+                                    >
+                                        Report 2
+                                    </MDBDropdownItem>
+                                    <MDBDropdownItem
+                                        className="default-color"
+                                        tag={MDBNavLink}
+                                        to="/projectify/reports/report3"
+                                    >
+                                        Report 3
+                                    </MDBDropdownItem>
+                                    <MDBDropdownItem
+                                        className="default-color"
+                                        tag={MDBNavLink}
+                                        to="/projectify/reports/report4"
+                                    >
+                                        Report 4
+                                    </MDBDropdownItem>
+                                </MDBDropdownMenu>
+                            </MDBDropdown>
                         </MDBNavItem>
                     </MDBNavbarNav>
                 </MDBCollapse>

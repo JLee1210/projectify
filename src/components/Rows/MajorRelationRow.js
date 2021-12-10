@@ -10,16 +10,15 @@ import {
     Row,
 } from 'reactstrap'
 
-import { projectUrl } from '../../constants/endpoints'
+import { majorRelationUrl } from '../../constants/endpoints'
 import { EditContext } from '../../context/EditProvider'
 import { TableContext } from '../../context/TableProvider'
 import { addRow, editRow } from '../../functions/restApi'
 
-export const ProjectRow = () => {
+export const MajorRelationRow = () => {
     const initialFormState = {
-        projectId: '',
-        name: '',
-        courseId: '',
+        studentId: '',
+        majorId: '',
     }
     const [formData, setFormData] = useState(initialFormState)
     const [buttonNameText, setButtonNameText] = useState('Add')
@@ -40,32 +39,32 @@ export const ProjectRow = () => {
     }, [setEditData, setEditTableType, setIsEdit])
 
     useEffect(() => {
-        setTableType('project')
+        setTableType('majorRelation')
         resetEditData()
     }, [setTableType, resetEditData])
 
     useEffect(() => {
-        isEdit && editTableType === 'project' && setFormData(editData)
+        isEdit && editTableType === 'majorRelation' && setFormData(editData)
         isEdit && setButtonNameText('Update')
     }, [editData, editTableType, isEdit])
 
-    const isEditRow = isEdit && editTableType === 'project'
+    const isEditRow = isEdit && editTableType === 'majorRelation'
 
-    const onClickProject = (e) => {
+    const onClickMajorRelation = (e) => {
         e.preventDefault()
-        addRow('project', formData, data, projectUrl)
+        addRow('majorRelation', formData, data, majorRelationUrl)
         setFormData(initialFormState)
     }
 
-    const onEditProject = (e) => {
+    const onEditMajorRelation = (e) => {
         e.preventDefault()
-        formData.courseId = parseInt(formData.courseId)
-        formData.projectId = parseInt(formData.projectId)
+        formData.studentId = parseInt(formData.studentId)
+        formData.majorId = parseInt(formData.majorId)
         let editDataObject = {
             oldData: { ...editData },
             newData: { ...formData },
         }
-        editRow('project', editDataObject, data, projectUrl)
+        editRow('majorRelation', editDataObject, data, majorRelationUrl)
         setFormData(initialFormState)
         setButtonNameText('Add')
         resetEditData()
@@ -73,7 +72,7 @@ export const ProjectRow = () => {
 
     return (
         <div>
-            <h1 className="tc mb4">Project Table</h1>
+            <h1 className="tc mb4">Major Relation Table</h1>
             <div
                 id="add-row"
                 className="d-flex align-items-center justify-content-center"
@@ -82,12 +81,12 @@ export const ProjectRow = () => {
                     <Row form>
                         <Col sm={20}>
                             <FormGroup>
-                                <Label for="projectId" sm={10}>
-                                    Project ID
+                                <Label for="studentId" sm={10}>
+                                    Student ID
                                 </Label>
                                 <Input
-                                    id="projectId"
-                                    name="projectId"
+                                    id="studentId"
+                                    name="studentId"
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
@@ -97,56 +96,42 @@ export const ProjectRow = () => {
                                     required
                                     size={10}
                                     type="number"
-                                    value={formData.projectId}
+                                    value={formData.studentId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
                         </Col>
                         <Col sm={20}>
                             <FormGroup>
-                                <Label for="name" sm={2}>
-                                    Name
+                                <Label for="majorId" sm={10}>
+                                    Major ID
                                 </Label>
                                 <Input
-                                    id="name"
-                                    name="name"
+                                    id="majorId"
+                                    name="majorId"
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
-                                    size={10}
-                                    type="text"
-                                    value={formData.name}
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col sm={20}>
-                            <FormGroup>
-                                <Label for="courseId" sm={10}>
-                                    Course ID
-                                </Label>
-                                <Input
-                                    id="courseId"
-                                    name="courseId"
-                                    onChange={(e) =>
-                                        setFormData({
-                                            ...formData,
-                                            [e.target.name]: e.target.value,
-                                        })
-                                    }
+                                    required
                                     size={10}
                                     type="number"
-                                    value={formData.courseId}
+                                    value={formData.majorId}
                                 />
+                                <FormText>required</FormText>
                             </FormGroup>
                         </Col>
                         <Button
                             color="blue-grey"
                             className="h-25 m-auto"
-                            disabled={!formData.courseId}
-                            onClick={isEditRow ? onEditProject : onClickProject}
+                            disabled={!formData.majorId || !formData.studentId}
+                            onClick={
+                                isEditRow
+                                    ? onEditMajorRelation
+                                    : onClickMajorRelation
+                            }
                         >
                             {buttonNameText}
                         </Button>

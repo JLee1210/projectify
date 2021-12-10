@@ -10,7 +10,8 @@ export const HomePage = () => {
 
     return (
         <h1 className="blue-grey-text text-center">
-            Select a Table to display using the dropdown above
+            Select a Table or Report to display by clicking on the
+            Tables/Reports dropdown above.
         </h1>
     )
 }
