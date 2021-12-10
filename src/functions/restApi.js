@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const addRow = async (tableType, rowData, data, url = '') => {
     const response = await axios.post(url, rowData)
-    data.student.setTable(response.data.data)
+    data[tableType].setTable(response.data.data)
 }
 
 export const deleteRow = async (tableType, rowData, data, url = '') => {
