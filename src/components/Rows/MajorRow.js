@@ -1,33 +1,67 @@
+import { useCallback, useContext, useState, useEffect } from 'react'
 import {
     Button,
+    Col,
     Form,
     FormGroup,
     FormText,
     Input,
     Label,
-    Col,
     Row,
 } from 'reactstrap'
-import { useContext, useState, useEffect } from 'react'
-import { TableContext } from '../../context/TableProvider'
-import axios from 'axios'
+
 import { majorUrl } from '../../constants/endpoints'
+import { EditContext } from '../../context/EditProvider'
+import { TableContext } from '../../context/TableProvider'
+import { addRow, editRow } from '../../functions/restApi'
 
 export const MajorRow = () => {
-    const [formData, setFormData] = useState({
-        majorID: undefined,
-        name: undefined,
-    })
+    const initialFormState = {
+        majorId: '',
+        name: '',
+    }
+    const [formData, setFormData] = useState(initialFormState)
     const { data, setTableType } = useContext(TableContext)
+    const [buttonNameText, setButtonNameText] = useState('Add')
+    const {
+        isEdit,
+        setIsEdit,
+        editTableType,
+        setEditTableType,
+        editData,
+        setEditData,
+    } = useContext(EditContext)
+
+    const resetEditData = useCallback(() => {
+        setEditData({})
+        setEditTableType('')
+        setIsEdit(false)
+    }, [setEditData, setEditTableType, setIsEdit])
 
     useEffect(() => {
         setTableType('major')
-    }, [setTableType])
+        resetEditData()
+    }, [setTableType, resetEditData])
 
-    const onClickMajor = async (e) => {
+    useEffect(() => {
+        editTableType === 'major' && setFormData(editData)
+        isEdit && setButtonNameText('Update')
+    }, [editData, editTableType, isEdit])
+
+    const isEditRow = isEdit && editTableType === 'major'
+
+    const onClickMajor = (e) => {
         e.preventDefault()
-        const response = await axios.post(majorUrl, formData)
-        data.major.setTable(response.data.data)
+        addRow('major', formData, data, majorUrl)
+        setFormData(initialFormState)
+    }
+
+    const onEditMajor = (e) => {
+        e.preventDefault()
+        editRow('major', formData, data)
+        setFormData(initialFormState)
+        setButtonNameText('Add')
+        resetEditData()
     }
 
     return (
@@ -47,14 +81,16 @@ export const MajorRow = () => {
                                 <Input
                                     id="majorId"
                                     name="majorId"
-                                    type="number"
-                                    size={10}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    required
+                                    size={10}
+                                    type="number"
+                                    value={formData.majorId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
@@ -67,14 +103,15 @@ export const MajorRow = () => {
                                 <Input
                                     id="name"
                                     name="name"
-                                    type="text"
-                                    size={20}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={20}
+                                    type="text"
+                                    value={formData.name}
                                 />
                             </FormGroup>
                         </Col>
@@ -82,9 +119,9 @@ export const MajorRow = () => {
                             color="blue-grey"
                             className="h-25 m-auto"
                             disabled={!formData.majorId}
-                            onClick={onClickMajor}
+                            onClick={isEditRow ? onEditMajor : onClickMajor}
                         >
-                            Add
+                            {buttonNameText}
                         </Button>
                     </Row>
                 </Form>
