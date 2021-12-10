@@ -45,7 +45,7 @@ export const DepartmentRow = () => {
     }, [setTableType, resetEditData])
 
     useEffect(() => {
-        editTableType === 'department' && setFormData(editData)
+        isEdit && editTableType === 'department' && setFormData(editData)
         isEdit && setButtonNameText('Update')
     }, [editData, editTableType, isEdit])
 
@@ -59,7 +59,12 @@ export const DepartmentRow = () => {
 
     const onEditDepartment = (e) => {
         e.preventDefault()
-        editRow('department', formData, data)
+        formData.departmentId = parseInt(formData.departmentId)
+        let editDataObject = {
+            oldData: { ...editData },
+            newData: { ...formData },
+        }
+        editRow('department', editDataObject, data, departmentUrl)
         setFormData(initialFormState)
         setButtonNameText('Add')
         resetEditData()

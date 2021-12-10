@@ -47,7 +47,7 @@ export const StudentRow = () => {
     }, [setTableType, resetEditData])
 
     useEffect(() => {
-        editTableType === 'student' && setFormData(editData)
+        isEdit && editTableType === 'student' && setFormData(editData)
         isEdit && setButtonNameText('Update')
     }, [editData, editTableType, isEdit])
 
@@ -61,7 +61,14 @@ export const StudentRow = () => {
 
     const onEditStudent = (e) => {
         e.preventDefault()
-        editRow('student', formData, data)
+        formData.studentId = parseInt(formData.studentId)
+        formData.projectId = parseInt(formData.projectId)
+        formData.gpa = parseInt(formData.gpa)
+        let editDataObject = {
+            oldData: { ...editData },
+            newData: { ...formData },
+        }
+        editRow('student', editDataObject, data, studentUrl)
         setFormData(initialFormState)
         setButtonNameText('Add')
         resetEditData()

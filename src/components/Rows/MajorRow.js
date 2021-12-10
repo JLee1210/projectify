@@ -44,7 +44,7 @@ export const MajorRow = () => {
     }, [setTableType, resetEditData])
 
     useEffect(() => {
-        editTableType === 'major' && setFormData(editData)
+        isEdit && editTableType === 'major' && setFormData(editData)
         isEdit && setButtonNameText('Update')
     }, [editData, editTableType, isEdit])
 
@@ -58,7 +58,12 @@ export const MajorRow = () => {
 
     const onEditMajor = (e) => {
         e.preventDefault()
-        editRow('major', formData, data)
+        formData.majorId = parseInt(formData.majorId)
+        let editDataObject = {
+            oldData: { ...editData },
+            newData: { ...formData },
+        }
+        editRow('major', editDataObject, data, majorUrl)
         setFormData(initialFormState)
         setButtonNameText('Add')
         resetEditData()

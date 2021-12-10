@@ -44,7 +44,7 @@ export const MajorRelationRow = () => {
     }, [setTableType, resetEditData])
 
     useEffect(() => {
-        editTableType === 'majorRelation' && setFormData(editData)
+        isEdit && editTableType === 'majorRelation' && setFormData(editData)
         isEdit && setButtonNameText('Update')
     }, [editData, editTableType, isEdit])
 
@@ -58,7 +58,13 @@ export const MajorRelationRow = () => {
 
     const onEditMajorRelation = (e) => {
         e.preventDefault()
-        editRow('majorRelationnt', formData, data)
+        formData.studentId = parseInt(formData.studentId)
+        formData.majorId = parseInt(formData.majorId)
+        let editDataObject = {
+            oldData: { ...editData },
+            newData: { ...formData },
+        }
+        editRow('majorRelation', editDataObject, data, majorRelationUrl)
         setFormData(initialFormState)
         setButtonNameText('Add')
         resetEditData()
