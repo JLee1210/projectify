@@ -1,6 +1,8 @@
 import sqlite3
 import random as rand
 
+import sql
+
 
 STUDENT_SCHEMA = ('STUDENTID', 'PROJECTID', 'GRADUATINGCLASS', 'GPA', 'NAME')
 COURSE_SCHEMA = ('COURSEID', 'COURSENAME', 'INSTRUCTOR', 'DEPARTMENTID')
@@ -27,28 +29,49 @@ def get_table_schema(table):
 
 def add(conn, args, table):
     cursor = conn.cursor()
-    cursor.execute(f'INSERT INTO {table} {get_table_schema(table)} \nVALUES {tuple(args)}')
+    cursor.execute(f'INSERT INTO {table} {get_table_schema(table)} \nVALUES \
+                   {tuple(args)}')
     conn.commit()
     print('Added record ID ' + str(args[0]) + ' to table ' + table)
 
 
 def delete(conn, args, table):
-
     conn.execute()
-
 # Executing a custom search query
 
 
 def retrieve(conn, args):
-
     conn.execute()
 
 # Replacing a given row with the updated version of that row
 
 
-def edit(conn, args, table):
+def edit(conn, old_row, new_row, table):
+    cursor = conn.cursor()
+    params = new_row.copy()
 
-    conn.execute()
+    if table == "student":
+        params.append(old_row[0])
+        params.append(old_row[1])
+        conn.execute(sql.UPDATE_STUDENT_ROW, tuple(params))
+    elif table == "course":
+        params.append(old_row[0])
+        conn.execute(sql.UPDATE_COURSE_ROW, tuple(params))
+    elif table == "project":
+        params.append(old_row[0])
+        conn.execute(sql.UPDATE_PROJECT_ROW, tuple(params))
+    elif table == "department":
+        params.append(old_row[0])
+        conn.execute(sql.UPDATE_DEPARTMENT_ROW, tuple(params))
+    elif table == "major":
+        params.append(old_row[0])
+        conn.execute(sql.UPDATE_MAJOR_ROW, tuple(params))
+    elif table == "major_relation":
+        params.append(old_row[0])
+        params.append(old_row[1])
+        conn.execute(sql.UPDATE_MAJOR_RELATION_ROW, tuple(params))
+
+    conn.commit()
 
 
 def table_to_json(conn, table):
@@ -167,6 +190,7 @@ def main():
                 );
             ''')
     print("Tables created successfully")
+
 
 if __name__ == '__main__':
     main()
