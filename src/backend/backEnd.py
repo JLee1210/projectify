@@ -74,7 +74,7 @@ def table_to_json(conn, table):
             jsonData['departmentId'] = department_id
             jsonArray.append(jsonData)
     elif table == "project":
-        for name, project_id, course_id in data:
+        for project_id, name, course_id in data:
             jsonData = {}
             jsonData['projectId'] = project_id
             jsonData['name'] = name
@@ -87,14 +87,14 @@ def table_to_json(conn, table):
             jsonData['name'] = name
             jsonArray.append(jsonData)
     elif table == "department":
-        for name, department_id, department_head in data:
+        for department_id, name, department_head in data:
             jsonData = {}
             jsonData['departmentId'] = department_id
             jsonData['name'] = name
             jsonData['departmentHead'] = department_head
             jsonArray.append(jsonData)
     elif table == "major_relation":
-        for major_id, student_id in data:
+        for student_id, major_id in data:
             jsonData = {}
             jsonData['studentId'] = student_id
             jsonData['majorId'] = major_id
@@ -132,7 +132,7 @@ def main():
     conn.execute('''CREATE TABLE IF NOT EXISTS COURSE
                     (COURSEID      INT     NOT NULL,
                     COURSENAME     TEXT    NOT NULL,
-                    INSTRUCTOR     INT     NOT NULL,
+                    INSTRUCTOR     TEXT    NOT NULL,
                     DEPARTMENTID   INT     NOT NULL,
                     PRIMARY KEY (COURSEID)
                 );
