@@ -1,12 +1,12 @@
 import { useCallback, useContext, useState, useEffect } from 'react'
 import {
     Button,
+    Col,
     Form,
     FormGroup,
     FormText,
     Input,
     Label,
-    Col,
     Row,
 } from 'reactstrap'
 
@@ -16,13 +16,15 @@ import { TableContext } from '../../context/TableProvider'
 import { addRow, editRow } from '../../functions/restApi'
 
 export const CourseRow = () => {
-    const [formData, setFormData] = useState({
-        courseId: undefined,
-        departmentId: undefined,
-        instructor: undefined,
-        name: undefined,
-    })
-    const { data, setTableType, tableType } = useContext(TableContext)
+    const initialFormState = {
+        courseId: '',
+        name: '',
+        instructor: '',
+        departmentId: '',
+    }
+    const [formData, setFormData] = useState(initialFormState)
+    const [buttonNameText, setButtonNameText] = useState('Add')
+    const { data, setTableType } = useContext(TableContext)
     const {
         isEdit,
         setIsEdit,
@@ -45,25 +47,22 @@ export const CourseRow = () => {
 
     useEffect(() => {
         editTableType === 'course' && setFormData(editData)
-    }, [editData, editTableType])
+        isEdit && setButtonNameText('Update')
+    }, [editData, editTableType, isEdit])
 
     const isEditRow = isEdit && editTableType === 'course'
-    const buttonNameText = isEditRow ? 'Update' : 'Add'
 
-    const onClickCourse = async (e) => {
+    const onClickCourse = (e) => {
         e.preventDefault()
-        addRow(tableType, formData, data, courseUrl)
+        addRow('course', formData, data, courseUrl)
+        setFormData(initialFormState)
     }
 
-    const onEditCourse = async (e) => {
+    const onEditCourse = (e) => {
         e.preventDefault()
-        editRow(tableType, formData, data)
-        setFormData({
-            courseId: undefined,
-            departmentId: undefined,
-            instructor: undefined,
-            name: undefined,
-        })
+        editRow('course', formData, data)
+        setFormData(initialFormState)
+        setButtonNameText('Add')
         resetEditData()
     }
 
