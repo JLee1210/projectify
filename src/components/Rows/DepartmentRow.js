@@ -1,34 +1,68 @@
+import { useCallback, useContext, useState, useEffect } from 'react'
 import {
     Button,
+    Col,
     Form,
     FormGroup,
     FormText,
     Input,
     Label,
-    Col,
     Row,
 } from 'reactstrap'
-import { useContext, useState, useEffect } from 'react'
-import { TableContext } from '../../context/TableProvider'
-import axios from 'axios'
+
 import { departmentUrl } from '../../constants/endpoints'
+import { EditContext } from '../../context/EditProvider'
+import { TableContext } from '../../context/TableProvider'
+import { addRow, editRow } from '../../functions/restApi'
 
 export const DepartmentRow = () => {
-    const [formData, setFormData] = useState({
-        departmentID: undefined,
-        name: undefined,
-        departmentHead: undefined,
-    })
+    const initialFormState = {
+        departmentId: '',
+        name: '',
+        departmentHead: '',
+    }
+    const [formData, setFormData] = useState(initialFormState)
+    const [buttonNameText, setButtonNameText] = useState('Add')
     const { data, setTableType } = useContext(TableContext)
+    const {
+        isEdit,
+        setIsEdit,
+        editTableType,
+        setEditTableType,
+        editData,
+        setEditData,
+    } = useContext(EditContext)
+
+    const resetEditData = useCallback(() => {
+        setEditData({})
+        setEditTableType('')
+        setIsEdit(false)
+    }, [setEditData, setEditTableType, setIsEdit])
 
     useEffect(() => {
         setTableType('department')
-    }, [setTableType])
+        resetEditData()
+    }, [setTableType, resetEditData])
 
-    const onClickDepartment = async (e) => {
+    useEffect(() => {
+        editTableType === 'department' && setFormData(editData)
+        isEdit && setButtonNameText('Update')
+    }, [editData, editTableType, isEdit])
+
+    const isEditRow = isEdit && editTableType === 'department'
+
+    const onClickDepartment = (e) => {
         e.preventDefault()
-        const response = await axios.post(departmentUrl, formData)
-        data.department.setTable(response.data.data)
+        addRow('department', formData, data, departmentUrl)
+        setFormData(initialFormState)
+    }
+
+    const onEditDepartment = (e) => {
+        e.preventDefault()
+        editRow('department', formData, data)
+        setFormData(initialFormState)
+        setButtonNameText('Add')
+        resetEditData()
     }
 
     return (
@@ -48,14 +82,16 @@ export const DepartmentRow = () => {
                                 <Input
                                     id="departmentId"
                                     name="departmentId"
-                                    type="number"
-                                    size={10}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    required
+                                    size={10}
+                                    type="number"
+                                    value={formData.departmentId}
                                 />
                                 <FormText>required</FormText>
                             </FormGroup>
@@ -68,14 +104,15 @@ export const DepartmentRow = () => {
                                 <Input
                                     id="name"
                                     name="name"
-                                    type="text"
-                                    size={20}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={20}
+                                    type="text"
+                                    value={formData.name}
                                 />
                             </FormGroup>
                         </Col>
@@ -87,14 +124,15 @@ export const DepartmentRow = () => {
                                 <Input
                                     id="departmentHead"
                                     name="departmentHead"
-                                    type="text"
-                                    size={20}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    size={20}
+                                    type="text"
+                                    value={formData.departmentHead}
                                 />
                             </FormGroup>
                         </Col>
@@ -102,9 +140,11 @@ export const DepartmentRow = () => {
                             color="blue-grey"
                             className="h-25 m-auto"
                             disabled={!formData.departmentId}
-                            onClick={onClickDepartment}
+                            onClick={
+                                isEditRow ? onEditDepartment : onClickDepartment
+                            }
                         >
-                            Add
+                            {buttonNameText}
                         </Button>
                     </Row>
                 </Form>
