@@ -1,35 +1,22 @@
-import sqlite3
 import random as rand
 
 import sql
 
-STUDENT_SCHEMA = ('STUDENTID', 'PROJECTID', 'GRADUATINGCLASS', 'GPA', 'NAME')
-COURSE_SCHEMA = ('COURSEID', 'COURSENAME', 'INSTRUCTOR', 'DEPARTMENTID')
-PROJECT_SCHEMA = ('PROJECTID', 'NAME', 'COURSEID')
-MAJOR_RELATION_SCHEMA = ('STUDENTID', 'MAJORID')
-MAJOR_SCHEMA = ('MAJORID', 'NAME')
-DEPARTMENT_SCHEMA = ('DEPARTMENTID', 'DEPARTMENTNAME', 'DEPARTMENTHEAD')
-
-
-def get_table_schema(table):
-    if table == "student":
-        return STUDENT_SCHEMA
-    elif table == "course":
-        return COURSE_SCHEMA
-    elif table == "project":
-        return PROJECT_SCHEMA
-    elif table == "major":
-        return MAJOR_SCHEMA
-    elif table == "department":
-        return DEPARTMENT_SCHEMA
-    elif table == "major_relation":
-        return MAJOR_RELATION_SCHEMA
-
 
 def add(conn, row, table):
     cursor = conn.cursor()
-    cursor.execute(f'INSERT INTO {table} {get_table_schema(table)} \nVALUES \
-                   {tuple(row)}')
+    if table == "student":
+        conn.execute(sql.ADD_STUDENT_ROW, tuple(row))
+    elif table == "course":
+        conn.execute(sql.ADD_COURSE_ROW, tuple(row))
+    elif table == "project":
+        conn.execute(sql.ADD_PROJECT_ROW, tuple(row))
+    elif table == "department":
+        conn.execute(sql.ADD_DEPARTMENT_ROW, tuple(row))
+    elif table == "major":
+        conn.execute(sql.ADD_MAJOR_ROW, tuple(row))
+    elif table == "major_relation":
+        conn.execute(sql.ADD_MAJOR_RELATION_ROW, tuple(row))
     conn.commit()
     print('Added record ID ' + str(row[0]) + ' to table ' + table)
 
@@ -58,7 +45,7 @@ def delete(conn, row, table):
         params.append(row[1])
         conn.execute(sql.DELETE_MAJOR_RELATION_ROW, tuple(params))
     conn.commit()
-    print('Deleted record ID ' + str(row[0]) + ' to table ' + table)
+    print('Deleted record ID ' + str(row[0]) + ' in table ' + table)
 
 
 def edit(conn, old_row, new_row, table):
@@ -86,7 +73,7 @@ def edit(conn, old_row, new_row, table):
         params.append(old_row[1])
         conn.execute(sql.UPDATE_MAJOR_RELATION_ROW, tuple(params))
     conn.commit()
-    print('Updated record ID ' + str(row[0]) + ' to table ' + table)
+    print('Updated record ID ' + str(old_row[0]) + ' in table ' + table)
 
 
 def retrieve(conn, args):
@@ -95,8 +82,13 @@ def retrieve(conn, args):
 
 def table_to_json(conn, table):
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM {table}")
+
+    # clean string to avoid sql injection
+    table_name = ''.join(ch for ch in table if ch.isalnum())
+
+    cursor.execute("SELECT * FROM {}".format(table))
     data = cursor.fetchall()
+
     jsonArray = []
     if table == "student":
         for student_id, project_id, name, gpa, grad_class in data:
@@ -152,64 +144,3 @@ def table_to_json(conn, table):
 # def report3(conn):
 
 # def report4(conn):
-
-
-def main():
-
-    # DB connection
-    conn = sqlite3.connect('test.db')
-    print("Opened database successfully")
-    # Table creation
-#     conn.execute('''DROP TABLE IF EXISTS STUDENT;''') # ONLY UNCOMMENT WHEN CLEARING TABLE
-    conn.execute('''CREATE TABLE IF NOT EXISTS STUDENT
-                    (STUDENTID         INT     NOT NULL,
-                    PROJECTID          INT     NOT NULL,
-                    GRADUATINGCLASS    TEXT    NOT NULL,
-                    GPA                INT     NOT NULL,
-                    NAME               TEXT    NOT NULL,
-                    PRIMARY KEY (STUDENTID, PROJECTID)
-                );
-                ''')
-
-    conn.execute('''CREATE TABLE IF NOT EXISTS COURSE
-                    (COURSEID      INT     NOT NULL,
-                    COURSENAME     TEXT    NOT NULL,
-                    INSTRUCTOR     TEXT    NOT NULL,
-                    DEPARTMENTID   INT     NOT NULL,
-                    PRIMARY KEY (COURSEID)
-                );
-                ''')
-
-    conn.execute('''CREATE TABLE IF NOT EXISTS PROJECT
-                    (PROJECTID     INT     NOT NULL,
-                    NAME           TEXT    NOT NULL,
-                    COURSEID       INT     NOT NULL,
-                    PRIMARY KEY (PROJECTID)
-                );
-                ''')
-
-    conn.execute('''CREATE TABLE IF NOT EXISTS DEPARTMENT
-                    (DEPARTMENTID     INT       NOT NULL,
-                    DEPARTMENTNAME    TEXT      NOT NULL,
-                    DEPARTMENTHEAD    TEXT      NOT NULL,
-                    PRIMARY KEY (DEPARTMENTID)
-                );
-                ''')
-
-    conn.execute('''CREATE TABLE IF NOT EXISTS MAJOR
-                    (MAJORID    INT    NOT NULL,
-                    NAME        TEXT   NOT NULL,
-                    PRIMARY KEY (MAJORID)
-                );
-                ''')
-    conn.execute('''CREATE TABLE IF NOT EXISTS MAJOR_RELATION
-                (STUDENTID    INT    NOT NULL,
-                MAJORID       INT    NOT NULL,
-                PRIMARY KEY (STUDENTID, MAJORID)
-                );
-            ''')
-    print("Tables created successfully")
-
-
-if __name__ == '__main__':
-    main()
