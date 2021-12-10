@@ -4,8 +4,6 @@ import { Fragment, useContext, useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import { DynamicTable } from '../components/DynamicTable'
-import { ReportRoutes } from '../routes/ReportRoutes'
-import { InputRowRoutes } from '../routes/InputRowRoutes'
 import { NavBar } from '../components/NavBar'
 import {
     courseUrl,
@@ -17,46 +15,24 @@ import {
 } from '../constants/endpoints'
 import { TableContext } from '../context/TableProvider'
 import { HomePage } from '../pages/HomePage'
-
-// const test = [
-//     {
-//         name: 'Bob Mars',
-//         age: 21,
-//         major: 'Computer Science',
-//         email: 'bmars1@purdue.edu',
-//     },
-//     {
-//         name: 'Bob Mars',
-//         age: 20,
-//         major: 'Computer Science',
-//         email: 'bmars2@purdue.edu',
-//     },
-//     {
-//         name: 'James Bond',
-//         age: 44,
-//         major: 'Math',
-//         email: 'jbond@purdue.edu',
-//     },
-// ]
+import { InputRowRoutes } from '../routes/InputRowRoutes'
+import { ReportRoutes } from '../routes/ReportRoutes'
 
 export const TablesPage = () => {
     const { data } = useContext(TableContext)
-    const studentFetch = useFetch(studentUrl)
     const courseFetch = useFetch(courseUrl)
-    const projectFetch = useFetch(projectUrl)
     const departmentFetch = useFetch(departmentUrl)
     const majorFetch = useFetch(majorUrl)
     const majorRelationFetch = useFetch(majorRelationUrl)
+    const projectFetch = useFetch(projectUrl)
+    const studentFetch = useFetch(studentUrl)
 
     useEffect(() => {
-        if (!studentFetch.isLoading) {
-            data['student'].setTable(studentFetch.data.data)
-        }
-        if (!projectFetch.isLoading) {
-            data['project'].setTable(projectFetch.data.data)
-        }
         if (!courseFetch.isLoading) {
             data['course'].setTable(courseFetch.data.data)
+        }
+        if (!departmentFetch.isLoading) {
+            data['department'].setTable(departmentFetch.data.data)
         }
         if (!majorFetch.isLoading) {
             data['major'].setTable(majorFetch.data.data)
@@ -64,26 +40,29 @@ export const TablesPage = () => {
         if (!majorRelationFetch.isLoading) {
             data['majorRelation'].setTable(majorRelationFetch.data.data)
         }
-        if (!departmentFetch.isLoading) {
-            data['department'].setTable(departmentFetch.data.data)
+        if (!projectFetch.isLoading) {
+            data['project'].setTable(projectFetch.data.data)
+        }
+        if (!studentFetch.isLoading) {
+            data['student'].setTable(studentFetch.data.data)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
-        studentFetch.isLoading,
         courseFetch.isLoading,
-        projectFetch.isLoading,
         departmentFetch.isLoading,
         majorFetch.isLoading,
         majorRelationFetch.isLoading,
+        projectFetch.isLoading,
+        studentFetch.isLoading,
     ])
 
     const isTableLoading =
-        studentFetch.isLoading ||
         courseFetch.isLoading ||
-        projectFetch.isLoading ||
         departmentFetch.isLoading ||
         majorFetch.isLoading ||
-        majorRelationFetch.isLoading
+        majorRelationFetch.isLoading ||
+        projectFetch.isLoading ||
+        studentFetch.isLoading
     return (
         <Fragment>
             <NavBar />

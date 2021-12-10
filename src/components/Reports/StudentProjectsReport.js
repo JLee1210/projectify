@@ -13,7 +13,6 @@ export const StudentProjectsReport = () => {
         setTableType('studentProjects')
     }, [setTableType])
 
-    //TODO: Add post request url below
     const onClickReport = async (e) => {
         e.preventDefault()
         const response = await axios.post('', formData)

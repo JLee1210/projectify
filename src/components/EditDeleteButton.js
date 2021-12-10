@@ -1,4 +1,4 @@
-import { MDBIcon, MDBBtn } from 'mdbreact'
+import { MDBBtn, MDBIcon } from 'mdbreact'
 
 export const EditDeleteButton = ({ onEdit, onDelete }) => (
     <div>

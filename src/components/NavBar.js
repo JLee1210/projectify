@@ -1,17 +1,17 @@
-import { useState } from 'react'
 import {
+    MDBCollapse,
+    MDBDropdown,
+    MDBDropdownItem,
+    MDBDropdownMenu,
+    MDBDropdownToggle,
     MDBNavbar,
     MDBNavbarBrand,
     MDBNavbarNav,
+    MDBNavbarToggler,
     MDBNavItem,
     MDBNavLink,
-    MDBNavbarToggler,
-    MDBCollapse,
-    MDBDropdown,
-    MDBDropdownToggle,
-    MDBDropdownMenu,
-    MDBDropdownItem,
 } from 'mdbreact'
+import { useState } from 'react'
 
 export const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false)

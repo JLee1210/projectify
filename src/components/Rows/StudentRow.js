@@ -27,12 +27,12 @@ export const StudentRow = () => {
     const [buttonNameText, setButtonNameText] = useState('Add')
     const { data, setTableType } = useContext(TableContext)
     const {
-        isEdit,
-        setIsEdit,
-        editTableType,
-        setEditTableType,
         editData,
+        editTableType,
+        isEdit,
         setEditData,
+        setEditTableType,
+        setIsEdit,
     } = useContext(EditContext)
 
     const resetEditData = useCallback(() => {

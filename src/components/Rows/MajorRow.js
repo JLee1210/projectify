@@ -24,12 +24,12 @@ export const MajorRow = () => {
     const { data, setTableType } = useContext(TableContext)
     const [buttonNameText, setButtonNameText] = useState('Add')
     const {
-        isEdit,
-        setIsEdit,
-        editTableType,
-        setEditTableType,
         editData,
+        editTableType,
+        isEdit,
         setEditData,
+        setEditTableType,
+        setIsEdit,
     } = useContext(EditContext)
 
     const resetEditData = useCallback(() => {

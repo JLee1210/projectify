@@ -12,7 +12,6 @@ export const deleteRow = async (tableType, rowData, data, url = '') => {
 }
 
 export const editRow = async (tableType, newData, data, url = '') => {
-    //TODO: Add url for put request
     const response = await axios.put(url, newData)
     data[tableType].setTable(response.data.data)
 }

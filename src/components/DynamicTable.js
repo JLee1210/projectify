@@ -9,7 +9,7 @@ import { deleteRow } from '../functions/restApi'
 
 export const DynamicTable = (props) => {
     const { tableType, data } = useContext(TableContext)
-    const { setIsEdit, setEditTableType, setEditData } = useContext(EditContext)
+    const { setIsEdit, setEditData, setEditTableType } = useContext(EditContext)
     const dataObj = data[tableType] || {}
 
     const tableData = {
