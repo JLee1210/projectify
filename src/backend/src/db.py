@@ -138,12 +138,12 @@ def table_to_json(conn, table):
 
 # Reports
 
-def report1(conn, args):
+def student_projects_report(conn, args):
     cursor = conn.cursor()
-    
+
     cursor.execute(sql.REPORT_STUDENT_PROJECTS, tuple(args))
     results = cursor.fetchall()
-    # conn.commit()
+
     jsonArray = []
     for student_id, student_name, project_id, project_name in results:
         jsonData = {}
