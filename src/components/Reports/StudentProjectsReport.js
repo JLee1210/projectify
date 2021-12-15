@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useContext, useState, useEffect } from 'react'
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap'
-
+import { studentProjectUrl } from '../../constants/endpoints'
 import { TableContext } from '../../context/TableProvider'
 
 export const StudentProjectsReport = () => {
@@ -17,7 +17,8 @@ export const StudentProjectsReport = () => {
     const onClickReport = async (e) => {
         //TODO: Update URL
         e.preventDefault()
-        const response = await axios.post('', formData)
+        const response = await axios.post(studentProjectUrl, formData)
+        // console.log(response.data.data)
         data.studentProjects.setTable(response.data.data)
     }
 

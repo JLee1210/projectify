@@ -53,6 +53,12 @@ DELETE_STUDENT_ROW = """ DELETE FROM student
                          WHERE studentid = ? AND projectid = ?
                      """
 
+REPORT_STUDENT_PROJECTS = """ SELECT student.studentid, student.graduatingclass, student.projectid, project.name
+                              FROM student LEFT JOIN project
+                                ON student.projectid = project.projectid
+                              WHERE student.studentid = ?
+                          """
+
 UPDATE_COURSE_ROW = """ UPDATE course
                         SET courseid = ?,
                             coursename = ?,
