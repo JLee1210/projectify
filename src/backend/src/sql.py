@@ -95,3 +95,9 @@ UPDATE_STUDENT_ROW = """ UPDATE student
                              name = ?
                          WHERE studentid = ? AND projectid = ?
                      """
+
+REPORT_STUDENT_PROJECTS = """ SELECT student.studentid, student.graduatingclass, student.projectid, project.name 
+                              FROM student LEFT JOIN project 
+                                ON student.projectid = project.projectid
+                              WHERE student.studentid = ?
+                              """

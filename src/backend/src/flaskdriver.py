@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
-from db import add, delete, edit, table_to_json
+from db import add, delete, edit, table_to_json, report1
 
 
 app = Flask(__name__)
@@ -55,3 +55,20 @@ def tables(table):
         return return_json_data
 
     return jsonify({'data': NULL, 'status': 'FAIL'})
+
+
+@app.route("/reports/<report>", methods=["POST"])
+@cross_origin()
+def reports(report):
+    conn = sqlite3.connect('../test.db')
+
+    if request.method == "POST":
+        args = request.get_json()
+        data_to_get = [value for key, value in args.items()]
+        results = report1(conn, data_to_get)
+        conn.commit()
+        return_json_data = jsonify({'data': results,
+                                    'status': 'SUCCESS'})
+        conn.close
+        return return_json_data
+        
