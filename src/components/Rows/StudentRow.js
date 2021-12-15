@@ -19,9 +19,9 @@ export const StudentRow = () => {
     const initialFormState = {
         studentId: '',
         projectId: '',
-        name: '',
-        gpa: '',
         gradClass: '',
+        gpa: '',
+        name: '',
     }
     const [formData, setFormData] = useState(initialFormState)
     const [buttonNameText, setButtonNameText] = useState('Add')

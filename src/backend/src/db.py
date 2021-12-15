@@ -91,7 +91,7 @@ def table_to_json(conn, table):
 
     jsonArray = []
     if table == "student":
-        for student_id, project_id, name, gpa, grad_class in data:
+        for student_id, project_id, grad_class, gpa, name in data:
             jsonData = {}
             jsonData['studentId'] = student_id
             jsonData['projectId'] = project_id
