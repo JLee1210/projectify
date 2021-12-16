@@ -53,7 +53,13 @@ DELETE_STUDENT_ROW = """ DELETE FROM student
                          WHERE studentid = ? AND projectid = ?
                      """
 
-REPORT_STUDENT_PROJECTS = """ SELECT student.studentid, student.graduatingclass, student.projectid, project.name
+REPORT_GPA_BY_MAJOR = """ SELECT major.name, ROUND(AVG(student.GPA), 2)
+                          FROM student LEFT JOIN major_relation ON student.studentid = major_relation.studentid
+                                LEFT JOIN major ON major_relation.majorid = major.majorid
+                          WHERE major.name = ?
+                      """
+
+REPORT_STUDENT_PROJECTS = """ SELECT student.studentid, student.name, student.projectid, project.name
                               FROM student LEFT JOIN project
                                 ON student.projectid = project.projectid
                               WHERE student.studentid = ?

@@ -22,7 +22,7 @@ export const MajorRelationRow = () => {
     }
     const [formData, setFormData] = useState(initialFormState)
     const [buttonNameText, setButtonNameText] = useState('Add')
-    const { data, setTableType } = useContext(TableContext)
+    const { data, setIsReport, setTableType } = useContext(TableContext)
     const {
         editData,
         editTableType,
@@ -40,8 +40,9 @@ export const MajorRelationRow = () => {
 
     useEffect(() => {
         setTableType('majorRelation')
+        setIsReport(false)
         resetEditData()
-    }, [setTableType, resetEditData])
+    }, [setIsReport, setTableType, resetEditData])
 
     useEffect(() => {
         isEdit && editTableType === 'majorRelation' && setFormData(editData)

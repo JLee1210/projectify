@@ -23,7 +23,7 @@ export const ProjectRow = () => {
     }
     const [formData, setFormData] = useState(initialFormState)
     const [buttonNameText, setButtonNameText] = useState('Add')
-    const { data, setTableType } = useContext(TableContext)
+    const { data, setIsReport, setTableType } = useContext(TableContext)
     const {
         editData,
         editTableType,
@@ -41,8 +41,9 @@ export const ProjectRow = () => {
 
     useEffect(() => {
         setTableType('project')
+        setIsReport(false)
         resetEditData()
-    }, [setTableType, resetEditData])
+    }, [setIsReport, setTableType, resetEditData])
 
     useEffect(() => {
         isEdit && editTableType === 'project' && setFormData(editData)

@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
-from db import add, delete, edit, table_to_json, student_projects_report
+from db import add, delete, edit, table_to_json, student_projects_report, major_gpa_report
 
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['JSON_SORT_KEYS'] = False
 
 
-@app.route("/table/<table>", methods=["GET", "POST", "PUT", "DELETE"])
+@app.route("/tables/<table>", methods=["GET", "POST", "PUT", "DELETE"])
 @cross_origin()
 def tables(table):
     conn = sqlite3.connect('./test.db')
@@ -63,13 +63,24 @@ def reports(report):
     conn = sqlite3.connect('./test.db')
 
     if request.method == "POST":
-        args = request.get_json()
-        data_to_get = [value for key, value in args.items()]
-        results = student_projects_report(conn, data_to_get)
-        conn.commit()
-        return_json_data = jsonify({'data': results,
-                                    'status': 'SUCCESS'})
-        conn.close
-        return return_json_data
+        if report == "studentProjects":
+            args = request.get_json()
+            data_to_get = [value for key, value in args.items()]
+            results = student_projects_report(conn, data_to_get)
+            conn.commit()
+            return_json_data = jsonify({'data': results,
+                                        'status': 'SUCCESS'})
+            conn.close
+            return return_json_data
+
+        elif report == "avgGpaMajor":
+            args = request.get_json()
+            data_to_get = [value for key, value in args.items()]
+            results = major_gpa_report(conn, data_to_get)
+            conn.commit()
+            return_json_data = jsonify({'data': results,
+                                        'status': 'SUCCESS'})
+            conn.close
+            return return_json_data
 
     return jsonify({'data': NULL, 'status': 'FAIL'})

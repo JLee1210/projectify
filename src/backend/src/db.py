@@ -91,7 +91,7 @@ def table_to_json(conn, table):
 
     jsonArray = []
     if table == "student":
-        for student_id, project_id, name, gpa, grad_class in data:
+        for student_id, project_id, grad_class, gpa, name in data:
             jsonData = {}
             jsonData['studentId'] = student_id
             jsonData['projectId'] = project_id
@@ -155,7 +155,18 @@ def student_projects_report(conn, args):
     return jsonArray
 
 
-# def report2(conn):
+def major_gpa_report(conn, args):
+    cursor = conn.cursor()
+
+    cursor.execute(sql.REPORT_GPA_BY_MAJOR, tuple(args))
+    results = cursor.fetchall()
+    jsonArray = []
+    for major_name, avg_gpa in results:
+        jsonData = {}
+        jsonData['major'] = major_name
+        jsonData['avgGpa'] = avg_gpa
+        jsonArray.append(jsonData)
+    return jsonArray
 
 # def report3(conn):
 
