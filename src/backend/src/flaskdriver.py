@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
-from db import add, delete, edit, table_to_json, student_projects_report, major_gpa_report, count_projects_report
+from db import add, delete, edit, table_to_json, student_projects_report, major_gpa_report, count_projects_report, department_workload_report
 
 
 app = Flask(__name__)
@@ -63,8 +63,16 @@ def reports(report):
     conn = sqlite3.connect('./test.db')
 
     if request.method == "GET":
-        if report == "countProjects":
+        if report == "numProjectsByStudent":
             results = count_projects_report(conn)
+            conn.commit()
+            return_json_data = jsonify({'data': results,
+                                       'status': 'SUCCESS'})
+            conn.close()
+            return return_json_data
+
+        elif report == "numProjectsByDepartment":
+            results = department_workload_report(conn)
             conn.commit()
             return_json_data = jsonify({'data': results,
                                        'status': 'SUCCESS'})

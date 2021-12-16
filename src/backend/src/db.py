@@ -173,14 +173,25 @@ def count_projects_report(conn):
 
     cursor.execute(sql.REPORT_COUNT_PROJECTS)
     results = cursor.fetchall()
-
     jsonArray = []
     for student_id, name, project_count in results:
         jsonData = {}
         jsonData['studentId'] = student_id
         jsonData['name'] = name
-        jsonData['projectCount'] = project_count
+        jsonData['numProjects'] = project_count
         jsonArray.append(jsonData)
     return jsonArray
 
-# def report4(conn):
+def department_workload_report(conn):
+    cursor = conn.cursor()
+
+    cursor.execute(sql.REPORT_DEPARTMENT_LOAD)
+    results = cursor.fetchall()
+    jsonArray = []
+    for department_head, department_name, num_projects in results:
+        jsonData = {}
+        jsonData['departmentHead'] = department_head
+        jsonData['departmentName'] = department_name
+        jsonData['numProjects'] = num_projects
+        jsonArray.append(jsonData)
+    return jsonArray

@@ -55,17 +55,17 @@ def main():
                 );
             ''')
 
-    conn.execute('''DELIMITER //
+    # conn.execute('''DELIMITER #
 
-                    CREATE PROCEDURE CountProjects()
-                    BEGIN
-                        SELECT studentid, name, count(distinct(projectid)) as numberOfProjects
-                        FROM student
-                        GROUP BY studentid;
-                    END //
+    #                 CREATE PROCEDURE CountProjects()
+    #                 BEGIN
+    #                     SELECT studentid, name, count(distinct(projectid)) as numberOfProjects
+    #                     FROM student
+    #                     GROUP BY studentid;
+    #                 END #
 
-                    DELIMITER ;
-                 ''')
+    #                 DELIMITER ;
+    #              ''')
 
     print("Tables created successfully")
 

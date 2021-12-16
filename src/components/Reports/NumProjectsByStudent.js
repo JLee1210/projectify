@@ -17,8 +17,9 @@ export const NumProjectsByStudent = () => {
 
     const useOnClickReport = async (e) => {
         e.preventDefault()
-        const response = await axios.get('')
+        const response = await axios.get(numProjectsByStudentUrl)
         data.numProjectsByStudent.setTable(response.data.data)
+        console.log(response.data.data)
         setShowReport(true)
     }
 
