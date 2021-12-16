@@ -155,7 +155,18 @@ def student_projects_report(conn, args):
     return jsonArray
 
 
-# def report2(conn):
+def major_gpa_report(conn, args):
+    cursor = conn.cursor()
+
+    cursor.execute(sql.REPORT_GPA_BY_MAJOR, tuple(args))
+    results = cursor.fetchall()
+
+    jsonArray = []
+    for major_name, avg_gpa in results:
+        jsonData = {}
+        jsonData['name'] = major_name
+        jsonData['avgGPA'] = avg_gpa
+    return jsonArray
 
 # def report3(conn):
 
