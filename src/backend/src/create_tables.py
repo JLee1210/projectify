@@ -54,6 +54,11 @@ def main():
                 PRIMARY KEY (STUDENTID, MAJORID)
                 );
             ''')
+
+    conn.execute('''CREATE INDEX IF NOT EXISTS Student_idx ON STUDENT (STUDENTID, NAME);''')
+    conn.execute('''CREATE INDEX IF NOT EXISTS Project_idx ON PROJECT (COURSEID, NAME);''')
+    conn.execute('''CREATE INDEX IF NOT EXISTS Major_idx ON MAJOR_RELATION (STUDENTID, MAJORID);''')
+
     print("Tables created successfully")
 
 
