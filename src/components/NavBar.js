@@ -91,24 +91,36 @@ export const NavBar = () => {
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"
-                                        tag={MDBNavLink}
-                                        to="/projectify/reports/report2"
+                                        toggle={false}
                                     >
-                                        Report 2
+                                        <MDBDropdown dropright>
+                                            <MDBDropdownToggle nav caret>
+                                                Number of Projects
+                                            </MDBDropdownToggle>
+                                            <MDBDropdownMenu className="default-color ml-4">
+                                                <MDBDropdownItem
+                                                    className="default-color"
+                                                    tag={MDBNavLink}
+                                                    to="/projectify/reports/numProjectsByStudent"
+                                                >
+                                                    By Student
+                                                </MDBDropdownItem>
+                                                <MDBDropdownItem
+                                                    className="default-color"
+                                                    tag={MDBNavLink}
+                                                    to="/projectify/reports/numProjectsByDepartment"
+                                                >
+                                                    By Department
+                                                </MDBDropdownItem>
+                                            </MDBDropdownMenu>
+                                        </MDBDropdown>
                                     </MDBDropdownItem>
                                     <MDBDropdownItem
                                         className="default-color"
                                         tag={MDBNavLink}
-                                        to="/projectify/reports/report3"
+                                        to="/projectify/reports/avgGpaMajor"
                                     >
-                                        Report 3
-                                    </MDBDropdownItem>
-                                    <MDBDropdownItem
-                                        className="default-color"
-                                        tag={MDBNavLink}
-                                        to="/projectify/reports/report4"
-                                    >
-                                        Report 4
+                                        Avg GPA Major
                                     </MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>

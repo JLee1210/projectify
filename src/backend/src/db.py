@@ -160,12 +160,11 @@ def major_gpa_report(conn, args):
 
     cursor.execute(sql.REPORT_GPA_BY_MAJOR, tuple(args))
     results = cursor.fetchall()
-
     jsonArray = []
     for major_name, avg_gpa in results:
         jsonData = {}
-        jsonData['name'] = major_name
-        jsonData['avgGPA'] = avg_gpa
+        jsonData['major'] = major_name
+        jsonData['avgGpa'] = avg_gpa
         jsonArray.append(jsonData)
     return jsonArray
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { AvgGpaMajorReport } from '../components/Reports/AvgGpaMajorReport'
+import { NumProjectsByDepartment } from '../components/Reports/NumProjectsByDepartment'
+import { NumProjectsByStudent } from '../components/Reports/NumProjectsByStudent'
 
 import { StudentProjectsReport } from '../components/Reports/StudentProjectsReport'
 
-const FakeComponent = () => <div></div>
-//TODO: Update report2, report3, report4 once they are added on BE
 export const ReportRoutes = () => (
     <Switch>
         <Route
@@ -13,18 +14,18 @@ export const ReportRoutes = () => (
         />
         <Route
             exact
-            path="/projectify/reports/report2"
-            component={FakeComponent}
+            path="/projectify/reports/numProjectsByStudent"
+            component={NumProjectsByStudent}
         />
         <Route
             exact
-            path="/projectify/reports/report3"
-            component={FakeComponent}
+            path="/projectify/reports/numProjectsByDepartment"
+            component={NumProjectsByDepartment}
         />
         <Route
             exact
-            path="/projectify/reports/report4"
-            component={FakeComponent}
+            path="/projectify/reports/avgGpaMajor"
+            component={AvgGpaMajorReport}
         />
         <Route
             render={() => (

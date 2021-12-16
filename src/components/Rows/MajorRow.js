@@ -21,7 +21,7 @@ export const MajorRow = () => {
         name: '',
     }
     const [formData, setFormData] = useState(initialFormState)
-    const { data, setTableType } = useContext(TableContext)
+    const { data, setIsReport, setTableType } = useContext(TableContext)
     const [buttonNameText, setButtonNameText] = useState('Add')
     const {
         editData,
@@ -40,8 +40,9 @@ export const MajorRow = () => {
 
     useEffect(() => {
         setTableType('major')
+        setIsReport(false)
         resetEditData()
-    }, [setTableType, resetEditData])
+    }, [setIsReport, setTableType, resetEditData])
 
     useEffect(() => {
         isEdit && editTableType === 'major' && setFormData(editData)
