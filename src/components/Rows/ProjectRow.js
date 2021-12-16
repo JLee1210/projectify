@@ -40,7 +40,7 @@ export const ProjectRow = () => {
     }, [setEditData, setEditTableType, setIsEdit])
 
     useEffect(() => {
-        setTableType('course')
+        setTableType('project')
         setIsReport(false)
         resetEditData()
     }, [setIsReport, setTableType, resetEditData])

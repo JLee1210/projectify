@@ -39,7 +39,7 @@ export const MajorRelationRow = () => {
     }, [setEditData, setEditTableType, setIsEdit])
 
     useEffect(() => {
-        setTableType('course')
+        setTableType('majorRelation')
         setIsReport(false)
         resetEditData()
     }, [setIsReport, setTableType, resetEditData])

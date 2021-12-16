@@ -11,7 +11,7 @@ export const studentUrl = `${localHost}/tables/student`
 
 /************************* REPORTS URL ***************************/
 
-export const avgGpaMajorUrl = `${localHost}/reports/avgGpaMajorUrl`
+export const avgGpaMajorUrl = `${localHost}/reports/avgGpaMajor`
 export const numProjectsByDepartmentUrl = `${localHost}/reports/numProjectsByDepartment`
 export const numProjectsByStudentUrl = `${localHost}/reports/numProjectsByStudent`
 export const studentProjectUrl = `${localHost}/reports/studentProjects`

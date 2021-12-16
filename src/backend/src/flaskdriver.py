@@ -61,7 +61,7 @@ def tables(table):
 @cross_origin()
 def reports(report):
     conn = sqlite3.connect('./test.db')
-    
+
     if request.method == "POST":
         if report == "studentProjects":
             args = request.get_json()
@@ -72,8 +72,8 @@ def reports(report):
                                         'status': 'SUCCESS'})
             conn.close
             return return_json_data
-        
-        elif report == "majorGPA":
+
+        elif report == "avgGpaMajor":
             args = request.get_json()
             data_to_get = [value for key, value in args.items()]
             results = major_gpa_report(conn, data_to_get)

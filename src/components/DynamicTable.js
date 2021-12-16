@@ -1,5 +1,5 @@
 import { MDBDataTableV5 } from 'mdbreact'
-import { useContext, useCallback, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 
 import { urlByTable } from '../constants/endpoints'
 import { tableHeaderChooser } from '../constants/tableHeaders'
