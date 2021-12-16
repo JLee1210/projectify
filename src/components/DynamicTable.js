@@ -1,5 +1,5 @@
 import { MDBDataTableV5 } from 'mdbreact'
-import { useContext } from 'react'
+import { useContext, useCallback, useEffect } from 'react'
 
 import { urlByTable } from '../constants/endpoints'
 import { tableHeaderChooser } from '../constants/tableHeaders'
@@ -9,10 +9,16 @@ import { EditDeleteButton } from './EditDeleteButton'
 import { deleteRow } from '../functions/restApi'
 
 export const DynamicTable = (props) => {
-    const { tableType, data } = useContext(TableContext)
+    const { data, isReport, showReport, tableType } = useContext(TableContext)
     const { setIsEdit, setEditData, setEditTableType } = useContext(EditContext)
-    const dataObj = data[tableType] || {}
 
+    useEffect(() => {
+        if (isReport === true) {
+            data[tableType].setTable([])
+        }
+    }, [isReport, tableType])
+
+    const dataObj = data[tableType] || {}
     const tableData = {
         columns: tableHeaderChooser[tableType],
         rows: (dataObj['table'] || []).map((rowData) => ({
@@ -37,7 +43,10 @@ export const DynamicTable = (props) => {
         })),
     }
 
-    if (tableType === undefined) {
+    if (
+        tableType === undefined ||
+        (isReport === true && showReport === false)
+    ) {
         return <div></div>
     }
 

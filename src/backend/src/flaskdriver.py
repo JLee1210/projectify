@@ -11,7 +11,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['JSON_SORT_KEYS'] = False
 
 
-@app.route("/table/<table>", methods=["GET", "POST", "PUT", "DELETE"])
+@app.route("/tables/<table>", methods=["GET", "POST", "PUT", "DELETE"])
 @cross_origin()
 def tables(table):
     conn = sqlite3.connect('./test.db')

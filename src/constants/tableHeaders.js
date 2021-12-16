@@ -162,6 +162,62 @@ export const studentHeader = [
 ]
 
 /*********** REPORTS ***********/
+export const avgGpaMajorHeader = [
+    {
+        label: 'Major',
+        field: 'major',
+        sort: 'asc',
+        width: 200,
+    },
+    {
+        label: 'Average GPA',
+        field: 'avgGpa',
+        sort: 'asc',
+        width: 120,
+    },
+]
+
+export const numProjectsByDepartmentHeader = [
+    {
+        label: 'Department Head',
+        field: 'departmentHead',
+        sort: 'asc',
+        width: 200,
+    },
+    {
+        label: 'Department Name',
+        field: 'departmentName',
+        sort: 'asc',
+        width: 200,
+    },
+    {
+        label: 'Number of Projects',
+        field: 'numProjects',
+        sort: 'asc',
+        width: 120,
+    },
+]
+
+export const numProjectsByStudentHeader = [
+    {
+        label: 'Student ID',
+        field: 'studentId',
+        sort: 'asc',
+        width: 120,
+    },
+    {
+        label: 'Student Name',
+        field: 'name',
+        sort: 'asc',
+        width: 200,
+    },
+    {
+        label: 'Number of Projects',
+        field: 'numProjects',
+        sort: 'asc',
+        width: 120,
+    },
+]
 
 export const studentProjectsHeader = [
     {
@@ -191,10 +247,13 @@ export const studentProjectsHeader = [
 ]
 
 export const tableHeaderChooser = {
+    avgGpaMajor: avgGpaMajorHeader,
     course: courseHeader,
     department: departmentHeader,
     major: majorHeader,
     majorRelation: majorRelationHeader,
+    numProjectsByDepartment: numProjectsByDepartmentHeader,
+    numProjectsByStudent: numProjectsByStudentHeader,
     project: projectHeader,
     student: studentHeader,
     studentProjects: studentProjectsHeader,

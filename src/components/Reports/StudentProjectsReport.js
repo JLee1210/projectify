@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useContext, useState, useEffect } from 'react'
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap'
+
 import { studentProjectUrl } from '../../constants/endpoints'
 import { TableContext } from '../../context/TableProvider'
 
@@ -8,18 +9,20 @@ export const StudentProjectsReport = () => {
     const [formData, setFormData] = useState({
         studentId: undefined,
     })
-    const { data, setTableType } = useContext(TableContext)
+    const { data, setIsReport, setShowReport, setTableType } =
+        useContext(TableContext)
 
     useEffect(() => {
         setTableType('studentProjects')
-    }, [setTableType])
+        setIsReport(true)
+        setShowReport(false)
+    }, [setIsReport, setShowReport, setTableType])
 
     const onClickReport = async (e) => {
-        //TODO: Update URL
         e.preventDefault()
         const response = await axios.post(studentProjectUrl, formData)
-        // console.log(response.data.data)
         data.studentProjects.setTable(response.data.data)
+        setShowReport(true)
     }
 
     return (
