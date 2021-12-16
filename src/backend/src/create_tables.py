@@ -7,7 +7,7 @@ def main():
     print("Opened database successfully")
     # Table creation
 #     conn.execute('''DROP TABLE IF EXISTS STUDENT;''') # ONLY UNCOMMENT WHEN CLEARING TABLE
-    conn.execute("PRAGMA read_uncommitted = true;")
+    conn.execute("PRAGMA read_committed = true;")
     conn.execute('''CREATE TABLE IF NOT EXISTS STUDENT
                     (STUDENTID         INT     NOT NULL,
                     PROJECTID          INT     NOT NULL,
