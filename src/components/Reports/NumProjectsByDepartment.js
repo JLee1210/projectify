@@ -15,7 +15,7 @@ export const NumProjectsByDepartment = () => {
         setShowReport(false)
     }, [setIsReport, setShowReport, setTableType])
 
-    const useOnClickReport = async (e) => {
+    const onClickReport = async (e) => {
         e.preventDefault()
         const response = await axios.get(numProjectsByDepartmentUrl)
         data.numProjectsByDepartment.setTable(response.data.data)
@@ -34,7 +34,7 @@ export const NumProjectsByDepartment = () => {
             <Button
                 color="blue-grey"
                 className="h-25 d-flex ml-auto mr-auto mb-4"
-                onClick={useOnClickReport}
+                onClick={onClickReport}
             >
                 Retrieve Report
             </Button>

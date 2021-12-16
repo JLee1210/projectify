@@ -21,7 +21,6 @@ export const AvgGpaMajorReport = () => {
     const onClickReport = async (e) => {
         e.preventDefault()
         const response = await axios.post(avgGpaMajorUrl, formData)
-        console.log(formData)
         data.avgGpaMajor.setTable(response.data.data)
         setShowReport(true)
     }

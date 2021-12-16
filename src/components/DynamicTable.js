@@ -13,7 +13,7 @@ export const DynamicTable = (props) => {
     const { setIsEdit, setEditData, setEditTableType } = useContext(EditContext)
 
     useEffect(() => {
-        if (isReport === true) {
+        if (tableType && isReport === true) {
             data[tableType].setTable([])
         }
     }, [isReport, tableType])
