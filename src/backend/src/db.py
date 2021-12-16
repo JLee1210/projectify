@@ -76,10 +76,6 @@ def edit(conn, old_row, new_row, table):
     print('Updated record ID ' + str(old_row[0]) + ' in table ' + table)
 
 
-def retrieve(conn, args):
-    conn.execute()
-
-
 def table_to_json(conn, table):
     cursor = conn.cursor()
 
