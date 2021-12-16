@@ -65,6 +65,19 @@ REPORT_STUDENT_PROJECTS = """ SELECT student.studentid, student.name, student.pr
                               WHERE student.studentid = ?
                           """
 
+REPORT_COUNT_PROJECTS = """ SELECT studentid, name, count(distinct(projectid))
+                            FROM student
+                            GROUP BY studentid;
+                        """
+
+REPORT_DEPARTMENT_LOAD = """SELECT departmenthead, departmentname, count(distinct(projectid)) as numberOfProjects
+                            FROM project p LEFT JOIN course c ON p.courseid = c.courseid
+                            LEFT JOIN department d ON c.departmentid = d.departmentid
+                            GROUP BY departmenthead;
+                         """
+
+
+
 UPDATE_COURSE_ROW = """ UPDATE course
                         SET courseid = ?,
                             coursename = ?,

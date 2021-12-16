@@ -76,10 +76,6 @@ def edit(conn, old_row, new_row, table):
     print('Updated record ID ' + str(old_row[0]) + ' in table ' + table)
 
 
-def retrieve(conn, args):
-    conn.execute()
-
-
 def table_to_json(conn, table):
     cursor = conn.cursor()
 
@@ -168,6 +164,30 @@ def major_gpa_report(conn, args):
         jsonArray.append(jsonData)
     return jsonArray
 
-# def report3(conn):
+def count_projects_report(conn):
+    cursor = conn.cursor()
 
-# def report4(conn):
+    cursor.execute(sql.REPORT_COUNT_PROJECTS)
+    results = cursor.fetchall()
+    jsonArray = []
+    for student_id, name, project_count in results:
+        jsonData = {}
+        jsonData['studentId'] = student_id
+        jsonData['name'] = name
+        jsonData['numProjects'] = project_count
+        jsonArray.append(jsonData)
+    return jsonArray
+
+def department_workload_report(conn):
+    cursor = conn.cursor()
+
+    cursor.execute(sql.REPORT_DEPARTMENT_LOAD)
+    results = cursor.fetchall()
+    jsonArray = []
+    for department_head, department_name, num_projects in results:
+        jsonData = {}
+        jsonData['departmentHead'] = department_head
+        jsonData['departmentName'] = department_name
+        jsonData['numProjects'] = num_projects
+        jsonArray.append(jsonData)
+    return jsonArray

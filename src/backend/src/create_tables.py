@@ -56,6 +56,30 @@ def main():
                 );
             ''')
 
+conn.execute('''DELIMITER #
+
+                    CREATE PROCEDURE CountProjects()
+                    BEGIN
+                        SELECT studentid, name, count(distinct(projectid)) as numberOfProjects
+                        FROM student
+                        GROUP BY studentid;
+                    END #
+
+                    DELIMITER ;
+                 ''')
+
+    conn.execute('''DELIMITER //
+
+                CREATE PROCEDURE DeptHeadWorkload()
+                BEGIN
+                    SELECT DepartmentHead, DepartmentName, count(distinct(ProjectID)) as numberOfProjects
+                    FROM project p LEFT JOIN course c ON p.CourseID = c.CourseID
+                    LEFT JOIN department d ON c.DepartmentID = d.DepartmentID
+                    GROUP BY DepartmentHead;
+                END //
+
+                ''')
+
     conn.execute('''CREATE INDEX IF NOT EXISTS Student_idx ON STUDENT (STUDENTID, NAME);''')
     conn.execute('''CREATE INDEX IF NOT EXISTS Project_idx ON PROJECT (COURSEID, NAME);''')
     conn.execute('''CREATE INDEX IF NOT EXISTS Major_idx ON MAJOR_RELATION (STUDENTID, MAJORID);''')

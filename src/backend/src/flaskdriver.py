@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
-from db import add, delete, edit, table_to_json, student_projects_report, major_gpa_report
+from db import add, delete, edit, table_to_json, student_projects_report, major_gpa_report, count_projects_report, department_workload_report
 
 
 app = Flask(__name__)
@@ -57,11 +57,29 @@ def tables(table):
     return jsonify({'data': NULL, 'status': 'FAIL'})
 
 
-@app.route("/reports/<report>", methods=["POST"])
+@app.route("/reports/<report>", methods=["GET", "POST"])
 @cross_origin()
 def reports(report):
     conn = sqlite3.connect('./test.db')
 
+    if request.method == "GET":
+        if report == "numProjectsByStudent":
+            results = count_projects_report(conn)
+            conn.commit()
+            return_json_data = jsonify({'data': results,
+                                       'status': 'SUCCESS'})
+            conn.close()
+            return return_json_data
+
+        elif report == "numProjectsByDepartment":
+            results = department_workload_report(conn)
+            conn.commit()
+            return_json_data = jsonify({'data': results,
+                                       'status': 'SUCCESS'})
+            conn.close()
+            return return_json_data
+
+    
     if request.method == "POST":
         if report == "studentProjects":
             args = request.get_json()
@@ -70,7 +88,7 @@ def reports(report):
             conn.commit()
             return_json_data = jsonify({'data': results,
                                         'status': 'SUCCESS'})
-            conn.close
+            conn.close()
             return return_json_data
 
         elif report == "avgGpaMajor":
@@ -80,7 +98,9 @@ def reports(report):
             conn.commit()
             return_json_data = jsonify({'data': results,
                                         'status': 'SUCCESS'})
-            conn.close
+            conn.close()
             return return_json_data
+
+    
 
     return jsonify({'data': NULL, 'status': 'FAIL'})
