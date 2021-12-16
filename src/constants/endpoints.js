@@ -8,6 +8,7 @@ export const projectUrl = `${localHost}/table/project`
 export const studentUrl = `${localHost}/table/student`
 export const studentProjectUrl = `${localHost}/reports/studentProjects`
 export const majorGpaUrl = `${localHost}/reports/majorGPA`
+export const countProjectsUrl = `${localHost}/reports/countProjects`
 
 export const urlByTable = {
     course: courseUrl,
@@ -18,4 +19,5 @@ export const urlByTable = {
     student: studentUrl,
     studentProject: studentProjectUrl,
     majorGpa: majorGpaUrl,
+    countProjects: countProjectsUrl,
 }

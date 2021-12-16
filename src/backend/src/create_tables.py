@@ -54,6 +54,19 @@ def main():
                 PRIMARY KEY (STUDENTID, MAJORID)
                 );
             ''')
+
+    conn.execute('''DELIMITER //
+
+                    CREATE PROCEDURE CountProjects()
+                    BEGIN
+                        SELECT studentid, name, count(distinct(projectid)) as numberOfProjects
+                        FROM student
+                        GROUP BY studentid;
+                    END //
+
+                    DELIMITER ;
+                 ''')
+
     print("Tables created successfully")
 
 

@@ -59,11 +59,14 @@ REPORT_STUDENT_PROJECTS = """ SELECT student.studentid, student.name, student.pr
                               WHERE student.studentid = ?
                           """
 
-REPORT_GPA_BY_MAJOR = """ SELECT major.name, AVG(student.GPA)
+REPORT_GPA_BY_MAJOR = """ SELECT major.name, ROUND(AVG(student.GPA), 2)
                           FROM student LEFT JOIN major_relation ON student.studentid = major_relation.studentid
                                 LEFT JOIN major ON major_relation.majorid = major.majorid
                           WHERE major.name = ?
                       """
+
+REPORT_COUNT_PROJECTS = """ CALL CountProjects() 
+                        """
 
 UPDATE_COURSE_ROW = """ UPDATE course
                         SET courseid = ?,
